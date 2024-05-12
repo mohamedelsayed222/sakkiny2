@@ -11,6 +11,9 @@ const bootstrap=(app,express)=>{
     app.use(express.json())
     connectDB();
     // app.use(cors())
+    app.get('/',(req,res)=>{
+        res.send("Welcome to Sakkiny")
+    })
     app.use('/user',userRouter)
     app.use('/auth',authRouter)
     app.use('/property',propertyRouter)
