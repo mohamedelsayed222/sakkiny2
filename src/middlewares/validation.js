@@ -29,39 +29,39 @@ export const generalFields = {
   _id: joi.string().custom(validationObjectId),
 }
 
-export const validationCoreFunction = (schema) => {
-  return (req, res, next) => {
-    // req
-    let validationErrorArr = []
-    for (const key of reqMethods) {
-      if (schema[key]) {
-        const validationResult = schema[key].validate(req[key], {
-          abortEarly: false,
-        }) // error
-        console.log(validationResult.error)
-        if (validationResult.error) {
-          // validationErrorArr = [...validationResult.error.details]
-          validationErrorArr.push(validationResult.error.details)
-        }
-      }
-    }
+// export const validationCoreFunction = (schema) => {
+//   return (req, res, next) => {
+//     // req
+//     let validationErrorArr = []
+//     for (const key of reqMethods) {
+//       if (schema[key]) {
+//         const validationResult = schema[key].validate(req[key], {
+//           abortEarly: false,
+//         }) // error
+//         console.log(validationResult.error)
+//         if (validationResult.error) {
+//           // validationErrorArr = [...validationResult.error.details]
+//           validationErrorArr.push(validationResult.error.details)
+//         }
+//       }
+//     }
 
-    if (validationErrorArr.length) {
-      req.validationErrors = validationErrorArr
-      return next(new Error('', { cause: 400 }))
-    }
-    next()
+//     if (validationErrorArr.length) {
+//       req.validationErrors = validationErrorArr
+//       return next(new Error('', { cause: 400 }))
+//     }
+//     next()
+//   }
+// }
+
+
+export const validationCoreFunction=(schema)=>{
+  return (req,res,next)=>{
+      const allDataFromAllMethods={...req.body,...req.params,...req.query}
+  const validationResult = schema.validate(allDataFromAllMethods,{abortEarly:false})
+  if(validationResult.error ){
+  return res.json({message:"Validation Error",validationResulError:validationResult.error.details}) 
   }
-}
-
-
-// export const validationCoreFunction=(schema)=>{
-//   return (req,res,next)=>{
-//       const allDataFromAllMethods={...req.body,...req.params,...req.query}
-//   const validationResult = schema.validate(allDataFromAllMethods,{abortEarly:false})
-//   if(validationResult.error ){
-//   return res.json({message:"Validation Error",validationResulError:validationResult.error.details}) 
-//   }
-//   return next()
-//   }
-//   }
+  return next()
+  }
+  }
