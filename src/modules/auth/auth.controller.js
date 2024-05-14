@@ -9,20 +9,20 @@ export const signup=asyncHandler(
 async(req,res,next)=>{
     const {
         name,
-        userName,
         email,
         password,
-        // address,
         phoneNumber,
         age,
         gender,
 
     }=req.body
     // console.log(address);
+    //check
     const checkEmail=await userModel.findOne({email})
     if(checkEmail){
     return next(new Error("Email exist" ,{cause:409}))
     }
+
     const hashpassword=bcrypt.hashSync
     (password,parseInt(process.env.SALT_ROUND)) 
     
@@ -31,14 +31,14 @@ async(req,res,next)=>{
         signature:process.env.EMAIL_SIGNATURE,
         expiresIn:60*60
     })
-    console.log(token);
+    // console.log(token);
     const retoken=generateToken({
         payload:{id:user._id,email:user.email},
         signature:process.env.EMAIL_SIGNATURE,
         expiresIn:60*60*24*30
     })
-    console.log(retoken);
-
+    // console.log(retoken);
+    //send Email to confirm user email
         const link =`${req.protocol}://${req.headers.host}/auth/confirmEmail/${token}`
         const resendLink=`${req.protocol}://${req.headers.host}/auth/resendConfirmEmail/${retoken}`
         const html=`<!DOCTYPE html>
@@ -63,6 +63,7 @@ async(req,res,next)=>{
         </body>
         </html>`
     await sendEmail({to:user.email,subject:"confirmation",html})
+    //save user to DB
     const user=await userModel.create({
         name,
         email,
@@ -78,7 +79,6 @@ async(req,res,next)=>{
     return res.status(201).json({message:"Done",user})
 }
 )
-
 
 export const confirmEmail=asyncHandler(
   async(req,res,next)=>{

@@ -14,7 +14,7 @@ body:
                 password:joi.string()
                         .pattern(new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{6,}$/))
                         .required(),
-                cpassword: joi.string().valid(joi.ref('password')).required(),            
+                // cpassword: joi.string().valid(joi.ref('password')).required(),            
 }).required().options({allowUnknown:false})
 }
 
