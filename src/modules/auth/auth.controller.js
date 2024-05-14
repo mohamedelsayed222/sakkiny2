@@ -21,19 +21,10 @@ async(req,res,next)=>{
     // console.log(address);
     const checkEmail=await userModel.findOne({email})
     if(checkEmail){
-      return next(new Error("Email exist" ,{cause:409}))
+    return next(new Error("Email exist" ,{cause:409}))
     }
     const hashpassword=bcrypt.hashSync
     (password,parseInt(process.env.SALT_ROUND)) 
-    const user=await userModel.create({
-        name,
-        email,
-        password:hashpassword,
-        // address,
-        age,
-        gender,
-        phoneNumber,
-    })
     
     const token=generateToken({
         payload:{id:user._id,email:user.email},
@@ -72,6 +63,18 @@ async(req,res,next)=>{
         </body>
         </html>`
     await sendEmail({to:user.email,subject:"confirmation",html})
+    const user=await userModel.create({
+        name,
+        email,
+        password:hashpassword,
+        // address,
+        age,
+        gender,
+        phoneNumber,
+    })
+    if(!user){
+        return next (new Error('try again later',{cause:500}))
+    }
     return res.status(201).json({message:"Done",user})
 }
 )
