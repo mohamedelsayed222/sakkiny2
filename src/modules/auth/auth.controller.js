@@ -25,7 +25,15 @@ async(req,res,next)=>{
 
     const hashpassword=bcrypt.hashSync
     (password,parseInt(process.env.SALT_ROUND)) 
-    
+    const user=await userModel.create({
+        name,
+        email,
+        password:hashpassword,
+        // address,
+        age,
+        gender,
+        phoneNumber,
+    })
     const token=generateToken({
         payload:{id:user._id,email:user.email},
         signature:process.env.EMAIL_SIGNATURE,
@@ -62,23 +70,16 @@ async(req,res,next)=>{
           </div>
         </body>
         </html>`
-    await sendEmail({to:user.email,subject:"confirmation",html})
+    const x= await sendEmail({to:user.email,subject:"confirmation",html})
     //save user to DB
-    const user=await userModel.create({
-        name,
-        email,
-        password:hashpassword,
-        // address,
-        age,
-        gender,
-        phoneNumber,
-    })
+    console.log(x);
     if(!user){
         return next (new Error('try again later',{cause:500}))
     }
     return res.status(201).json({message:"Done",user})
 }
 )
+
 
 export const confirmEmail=asyncHandler(
   async(req,res,next)=>{
