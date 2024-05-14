@@ -8,12 +8,11 @@ import { generateToken, verifyToken } from '../../utils/tokenFunctions.js';
 export const signup=asyncHandler(
 async(req,res,next)=>{
     const {
-        firstName,
-        lastName,
+        name,
         userName,
         email,
         password,
-        address,
+        // address,
         phoneNumber,
         age,
         gender,
@@ -27,12 +26,10 @@ async(req,res,next)=>{
     const hashpassword=bcrypt.hashSync
     (password,parseInt(process.env.SALT_ROUND)) 
     const user=await userModel.create({
-        firstName,
-        lastName,
-        userName,
+        name,
         email,
         password:hashpassword,
-        address,
+        // address,
         age,
         gender,
         phoneNumber,
@@ -43,11 +40,14 @@ async(req,res,next)=>{
         signature:process.env.EMAIL_SIGNATURE,
         expiresIn:60*60
     })
+    console.log(token);
     const retoken=generateToken({
         payload:{id:user._id,email:user.email},
         signature:process.env.EMAIL_SIGNATURE,
         expiresIn:60*60*24*30
     })
+    console.log(retoken);
+
         const link =`${req.protocol}://${req.headers.host}/auth/confirmEmail/${token}`
         const resendLink=`${req.protocol}://${req.headers.host}/auth/resendConfirmEmail/${retoken}`
         const html=`<!DOCTYPE html>

@@ -1,5 +1,5 @@
 import { Schema ,model } from "mongoose";
-import { AddressSchema } from "./Address.schema.js";
+// import { AddressSchema } from "./Address.schema.js";
 import { systemRoles } from "../../src/utils/systemRoles.js";
 
 const userSchema=new Schema(
@@ -9,11 +9,9 @@ const userSchema=new Schema(
             required:true,
             unique:true
         },
-        firstName:{
+        name:{
             type:String,
-        },
-        lastName:{
-            type:String,
+            required:true,
         },
         password:{
             type:String,
@@ -38,7 +36,7 @@ const userSchema=new Schema(
             default:'Not specified',
             enum:['Male','Female' ,'Not specified']
         },
-        address:[AddressSchema],
+        // address:[AddressSchema],
         profilePicture:{
             secure_url:String,
             public_id:String
@@ -61,9 +59,9 @@ const userSchema=new Schema(
             type:Boolean,
             default:false
         },
-        userCurrentLocation:{
+        // userCurrentLocation:{
 
-        },
+        // },
     },{
         timestamps:true
     }
