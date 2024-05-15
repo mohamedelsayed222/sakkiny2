@@ -20,7 +20,7 @@ async(req,res,next)=>{
     //check
     const checkEmail=await userModel.findOne({email})
     if(checkEmail){
-    return next(new Error("Email exist" ,{cause:409}))
+    return next(new Error("Email exist" ,{cause:200}))
     }
 
     const hashpassword=bcrypt.hashSync
@@ -77,7 +77,7 @@ async(req,res,next)=>{
     if(!user){
         return next (new Error('try again later',{cause:500}))
     }
-    return res.status(201).json({status:true,message:"You have been signed in successfully",user})
+    return res.status(201).json({status:true,message:"You have been signed in successfully, please activiate your gmail account",user})
 }
 )
 
@@ -155,15 +155,15 @@ export const login=asyncHandler(
     console.log({email,password});
     const user=await userModel.findOne({email})
     if(!user){
-    return next(new Error("Invalid Email email does not exist ",{cause:401}))
+    return next(new Error("Invalid Email email does not exist ",{cause:200}))
         }
     const match=bcrypt.compareSync(password,user.password)
     if(!match){
-    return next(new Error("Invalid login data",{cause:401}))
+    return next(new Error("Invalid login data",{cause:200}))
     }
 
     if(user.confirmEmail==false){
-    return next(new Error("Please Confirm Your Email",{cause:404}))
+    return next(new Error("Please Confirm Your Email",{cause:200}))
     }
     const token=generateToken({
         payload:{
@@ -178,7 +178,7 @@ export const login=asyncHandler(
 
     })
     if(!token){
-        return next(new Error("Payload is required ya fanan",{cause:400}))
+        return next(new Error("Payload is required ya fanan",{cause:200}))
     }
     user.usertoken=token 
     user.status="Online"
@@ -194,7 +194,7 @@ export const forgetPassword=asyncHandler(
         const {email}=req.body
         const user=await userModel.findOne({email})
         if(!user){
-            return next(new Error("Email does not exist ",{cause:401}))
+            return next(new Error("Email does not exist ",{cause:200}))
         }
         const token=generateToken({
                 payload:{id:user._id,email:user.email},
@@ -258,7 +258,7 @@ export const updatePassword=asyncHandler(
         const user=req.user
         const match=bcrypt.compareSync(oldPassword,user.password)
         if(!match){
-        return next(new Error("Wrong password",{cause:401}))
+        return next(new Error("Wrong password",{cause:200}))
         }
         if (newPassword!=cnewPassword){
             return next(new Error('Not matched'))
