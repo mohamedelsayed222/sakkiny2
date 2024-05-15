@@ -77,7 +77,7 @@ async(req,res,next)=>{
     if(!user){
         return next (new Error('try again later',{cause:500}))
     }
-    return res.status(201).json({message:"Done",user})
+    return res.status(201).json({status:true,message:"You have been signed in successfully",user})
 }
 )
 
@@ -92,7 +92,7 @@ export const confirmEmail=asyncHandler(
         {confirmEmail:true},
         {new:true})
         // console.log(user);
-    return user ? res.json({message:"Done",user})
+    return user ? res.json({status:true,message:"Done",data:user})
     : res.send(`<a href="${req.protocol}://${req.headers.host}/auth/signup">
     ooops you look like you don't sign up follow me to sign up
     </a>`
@@ -183,7 +183,7 @@ export const login=asyncHandler(
     user.usertoken=token 
     user.status="Online"
     await user.save()
-    return res.status(200).json({message:"Done",user})
+    return res.status(200).json({status:true,message:"You have been logged in successfully",data:user})
     }
 )
 
@@ -268,3 +268,5 @@ export const updatePassword=asyncHandler(
         user.save()
         return res.json({message:"Done your password updated"})
     })
+
+

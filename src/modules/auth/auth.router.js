@@ -18,7 +18,7 @@ import bodyParser from 'body-parser';
     router.post("/resetPassword/:token",authController.resetPassword)
     router.post("/login",
     bodyParser.urlencoded({ extended: true }),
-    // validationCoreFunction(login),
+    validationCoreFunction(login),
     authController.login)
     router.post("/resetPassword/",isAuth(),authController.resetPassword)
 
