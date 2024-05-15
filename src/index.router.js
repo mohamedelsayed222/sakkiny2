@@ -4,7 +4,7 @@ import authRouter from './modules/auth/auth.router.js'
 import propertyRouter from './modules/property/proprty.router.js'
 import hostingRouter from './modules/hosting/hosting.router.js'
 import { globalErrorHandling } from "./utils/errorHandling.js";
-import {bodyParser} from 'body-parser'
+import bodyParser from 'body-parser';
 // import cors from 'cors'
 
 
