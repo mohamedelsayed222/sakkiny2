@@ -12,7 +12,7 @@ body:
                         tlds:{allow:['com']}})
                         .min(8).lowercase().required(),
                 password:joi.string()
-                        .pattern(new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{6,}$/))
+                        .pattern(new RegExp(/^(?=.*\d)(?=.*[a-z])\w{6,}$/))
                         .required(),
                 // cpassword: joi.string().valid(joi.ref('password')).required(),            
 }).required().options({allowUnknown:false})
@@ -31,7 +31,7 @@ body:
         .lowercase()
         .required(),
         password:joi.string()
-                .pattern(new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{6,}$/))
+                .pattern(new RegExp(/^(?=.*\d)(?=.*[a-z])\w{6,}$/))
                 .required(),
 }).required().options({allowUnknown:false})
 }

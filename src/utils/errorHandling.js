@@ -11,9 +11,10 @@ export const globalErrorHandling = (err, req, res, next) => {
     if (err) {
         if (req.validationErrors) {
             return res.status(err['cause']|| 401)
-            .json({ message: req.validationErrors })
+            .json({ status:false,message: req.validationErrors })
         }
     return res.status(err['cause'] || 500).json({
+    status:false,
     message:err.message,
     err,
     stack:err.stack,

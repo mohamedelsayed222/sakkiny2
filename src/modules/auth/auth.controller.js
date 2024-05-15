@@ -5,7 +5,6 @@ import  sendEmail  from '../../services/sendEmailService.js';
 import { generateToken, verifyToken } from '../../utils/tokenFunctions.js';
 
 
-
 export const signup=asyncHandler(
 async(req,res,next)=>{
     const {
@@ -92,7 +91,7 @@ export const confirmEmail=asyncHandler(
         {confirmEmail:true},
         {new:true})
         // console.log(user);
-    return user ? res.json({status:true,message:"Done",data:user})
+    return user ? res.json({status:true,message:"Your Email Confirmed",data:user})
     : res.send(`<a href="${req.protocol}://${req.headers.host}/auth/signup">
     ooops you look like you don't sign up follow me to sign up
     </a>`
@@ -223,7 +222,7 @@ export const forgetPassword=asyncHandler(
         </body>
         </html>`
         await sendEmail({to:user.email,subject:"confirmation",html})
-        return res.status(200).json({message:"Done"})
+        return res.status(200).json({status:true,message:"Check your Email"})
     }
 )
 
