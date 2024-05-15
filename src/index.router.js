@@ -4,11 +4,13 @@ import authRouter from './modules/auth/auth.router.js'
 import propertyRouter from './modules/property/proprty.router.js'
 import hostingRouter from './modules/hosting/hosting.router.js'
 import { globalErrorHandling } from "./utils/errorHandling.js";
+import bodyParser from 'body-parser'
 // import cors from 'cors'
 
 
 const bootstrap=(app,express)=>{
     app.use(express.json())
+    app.use(bodyParser.urlencoded({ extended: true })); 
     connectDB();
     // app.use(cors())
     app.get('/',(req,res)=>{
