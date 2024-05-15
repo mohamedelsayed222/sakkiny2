@@ -25,23 +25,15 @@ async(req,res,next)=>{
 
     const hashpassword=bcrypt.hashSync
     (password,parseInt(process.env.SALT_ROUND)) 
-    const user=await userModel.create({
-        name,
-        email,
-        password:hashpassword,
-        // address,
-        age,
-        gender,
-        phoneNumber,
-    })
+  
     const token=generateToken({
-        payload:{id:user._id,email:user.email},
+        payload:{email:email},
         signature:process.env.EMAIL_SIGNATURE,
         expiresIn:60*60
     })
     // console.log(token);
     const retoken=generateToken({
-        payload:{id:user._id,email:user.email},
+        payload:{email:email},
         signature:process.env.EMAIL_SIGNATURE,
         expiresIn:60*60*24*30
     })
@@ -70,9 +62,18 @@ async(req,res,next)=>{
           </div>
         </body>
         </html>`
-    const x= await sendEmail({to:user.email,subject:"confirmation",html})
+    const x= await sendEmail({to:email,subject:"confirmation",html})
     //save user to DB
-    console.log(x);
+  
+    const user=await userModel.create({
+        name,
+        email,
+        password:hashpassword,
+        // address,
+        age,
+        gender,
+        phoneNumber,
+    })
     if(!user){
         return next (new Error('try again later',{cause:500}))
     }
@@ -86,8 +87,8 @@ export const confirmEmail=asyncHandler(
     const {token}=req.params
     const decoded=verifyToken({token,signature:process.env.EMAIL_SIGNATURE})
     console.log(decoded);
-    const user =await userModel.findByIdAndUpdate(
-        decoded.id,
+    const user =await userModel.findOneAndUpdate(
+        {email:decoded.email},
         {confirmEmail:true},
         {new:true})
         // console.log(user);
@@ -103,8 +104,8 @@ export const resendConfirmEmail=asyncHandler(
     async(req,res,next)=>{
     const {token}=req.params
     const decoded=verifyToken({token,signature:process.env.EMAIL_SIGNATURE})
-    const user=await userModel.findById(decoded.id)
-    if (!user){
+    const user=await userModel.findOne(decoded.email)
+    if (!user||!user._id){
     res.send(`<a href="${req.protocol}://${req.headers.host}/auth/signup">
         ooops you look like you don't sign up follow me to sign up
     </a>`
