@@ -29,18 +29,18 @@ async(req,res,next)=>{
     const token=generateToken({
         payload:{email:email},
         signature:process.env.EMAIL_SIGNATURE,
-        expiresIn:60*60
+        // expiresIn:60*60
     })
     // console.log(token);
-    const retoken=generateToken({
-        payload:{email:email},
-        signature:process.env.EMAIL_SIGNATURE,
-        expiresIn:60*60*24*30
-    })
+    // const retoken=generateToken({
+    //     payload:{email:email},
+    //     signature:process.env.EMAIL_SIGNATURE,
+    //     expiresIn:60*60*24*30
+    // })
     // console.log(retoken);
     //send Email to confirm user email
         const link =`${req.protocol}://${req.headers.host}/auth/confirmEmail/${token}`
-        const resendLink=`${req.protocol}://${req.headers.host}/auth/resendConfirmEmail/${retoken}`
+        // const resendLink=`${req.protocol}://${req.headers.host}/auth/resendConfirmEmail/${retoken}`
         const html=`<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -55,14 +55,10 @@ async(req,res,next)=>{
             <button style="background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">
             <a href="${link}" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff ; text-decoration: none; text-decoration: none; padding: 15px 25px; border-radius: 2px; display: inline-block;">Activate Account</a> 
             </button>
-            <br>
-            <button style="background-color: #008CBA; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">
-            <a href="${resendLink}" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff ; text-decoration: none; text-decoration: none; padding: 15px 25px; border-radius: 2px;  display: inline-block;">Resend Activation</a> 
-            </button>
           </div>
         </body>
         </html>`
-    const x= await sendEmail({to:email,subject:"confirmation",html})
+        await sendEmail({to:email,subject:"confirmation",html})
     //save user to DB
   
     const user=await userModel.create({
