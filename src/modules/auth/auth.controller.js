@@ -150,6 +150,8 @@ export const resendConfirmEmail=asyncHandler(
 export const login=asyncHandler(
     async(req,res,next)=>{
     const {email,password}=req.body
+    console.log(req.body)
+    console.log({email,password});
     const user=await userModel.findOne({email})
     if(!user){
     return next(new Error("Invalid Email email does not exist ",{cause:401}))
