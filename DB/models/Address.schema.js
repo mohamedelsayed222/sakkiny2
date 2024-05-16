@@ -9,6 +9,7 @@ export const AddressSchema = new Schema({
   });
 
   export const LocationScema=new Schema({
-    type:{type:String,default:'point',required:true},
+    type:{type:String,default:'point'},
     coordinates:[{type:Number,required:true}]
   })
+  

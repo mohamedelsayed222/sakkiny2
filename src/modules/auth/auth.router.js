@@ -13,7 +13,7 @@ import bodyParser from 'body-parser';
     router.post("/signup",
     validationCoreFunction(signup),authController.signup)
     router.get("/confirmEmail/:token",authController.confirmEmail)
-    router.get("/resendConfirmEmail/:token",authController.resendConfirmEmail)
+    // router.get("/resendConfirmEmail/:token",authController.resendConfirmEmail)
     router.post("/forgetpassword",authController.forgetPassword)
     router.post("/resetPassword/:token",authController.resetPassword)
     router.post("/login",

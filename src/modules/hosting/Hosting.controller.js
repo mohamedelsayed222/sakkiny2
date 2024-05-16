@@ -17,10 +17,10 @@ const {description,
     details}=req.body
     const user=req.user
 if(!user.isVerified){
-    return next (new Error("Please verify your identity",{cause:401}))
+    return next (new Error("Please verify your identity",{cause:200}))
 }
 if (!req.files?.length||req.files.length<5){
-    return next (new Error("Please upload  at least 5 pictures of your property",{cause:400}))
+    return next (new Error("Please upload  at least 5 pictures of your property",{cause:200}))
 }
 if(!user.customId){
   const customId = nanoid()
@@ -48,7 +48,8 @@ const property=await propertyModel.create(
     title,
     type,
     size,level,
-    // address,
+    address,
+    location,
     roomsNumber,
     isFurnished,
     SurroundingFacilities,
@@ -68,6 +69,8 @@ if (!property) {
 res.status(200).json({ message: 'Done', property })
 }
 
+
+
 export const updateProperty=async (req,res,next)=>{
 const user=req.user
 const {propertyid}=req.params
@@ -79,12 +82,14 @@ const {description,
   isFurnished,
   SurroundingFacility,
   price,per,
+  // address,
+  // location,
   numberOfGuests,
   details,
 }=req.body
   const property=await propertyModel.findById(propertyid)
   if(!property){
-    return next(new Error("Property not exist",{cause:401}))
+    return next(new Error("Property not exist",{cause:200}))
   }
   // console.log(!property.addedBy==user._id);
   // console.log(property.addedBy==user._id);
@@ -96,7 +101,7 @@ const {description,
   //   pu:property.addedBy
   // });
   if(!property.addedBy==user._id){
-    return next(new Error("You are not authorized",{cause:401}))
+    return next(new Error("You are not authorized",{cause:200}))
   }
   if(SurroundingFacility){
   if(!property.SurroundingFacilities.includes(SurroundingFacility))
@@ -141,15 +146,16 @@ await property.save()
 return res.status(200).json({message:"Updated",property})
 }
 
+
 export const deletePropertyImage=async (req,res,next)=>{
   const {propertyid}=req.params
   const {public_id}=req.body
   const property=await propertyModel.findById(propertyid)
   if(!property){
-    return next(new Error("Property not exist",{cause:404}))
+    return next(new Error("Property not exist",{cause:200}))
   }
   if(!property.addedBy==req.user._id){
-    return next(new Error("You are not authorized",{cause:401}))
+    return next(new Error("You are not authorized",{cause:200}))
   }
   // if(!property.propertyImages.includes({secure_url,public_id,_id})){
     
@@ -158,7 +164,7 @@ export const deletePropertyImage=async (req,res,next)=>{
 
   const image=property.propertyImages.find(i=>i.public_id=public_id)
   if(!image){
-      return next(new Error("Wrong Image",{cause:400}))
+      return next(new Error("Wrong Image",{cause:200}))
   }
   console.log(image);
   property.propertyImages.splice(property.propertyImages.indexOf(image),1)
@@ -167,15 +173,17 @@ export const deletePropertyImage=async (req,res,next)=>{
 return res.status(201).json({message:"Deleted"})
 }
 
+
+
 export const deleteProperty=async (req,res,next)=>{
   const {propertyid}=req.params
   const property=await propertyModel.findByIdAndDelete(propertyid)
   // console.log(property);
   if(!property){
-    return next(new Error("Property not exist",{cause:404}))
+    return next(new Error("Property not exist",{cause:200}))
   }
   if(!property.addedBy==req.user._id){
-    return next(new Error("You are not authorized",{cause:401}))
+    return next(new Error("You are not authorized",{cause:200}))
   }
   // console.log(property.customId);
 const publicIds=[]
@@ -189,6 +197,9 @@ const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${req.user.customId}/Pr
   await cloudinary.api.delete_folder(propertyFolder)
   return res.status(201).json({message:"Deleted"})
 }
+
+
+
 
 export const hideProperty=(req,res,next)=>{
 

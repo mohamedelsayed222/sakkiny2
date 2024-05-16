@@ -7,7 +7,8 @@ const propertySchema =new Schema({
     title:{type:String},
     type:{
         type:String,
-        enum:['Appartment','Duplex','Room','Studio','Shop','Villa']
+        enum:['Appartment','Duplex','Room','Studio','Shop','Villa'],
+        required:true
     }, 
     addedBy:{
         type:Schema.Types.ObjectId,
@@ -39,7 +40,7 @@ const propertySchema =new Schema({
     price:Number,
     per:{
         type:String,
-        enum:['night','day','week','month','year'],
+        enum:['day','week','month','year'],
         default:'month'
     },
     numberOfGuests:{
