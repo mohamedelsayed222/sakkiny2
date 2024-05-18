@@ -1,15 +1,15 @@
 import { Schema, model } from "mongoose";
-import { AddressSchema, LocationScema } from "./Address.schema.js";
-
 
 const propertySchema =new Schema({
     description:{type:String,required:true},
-    title:{type:String},
     type:{
         type:String,
         enum:['Appartment','Duplex','Room','Studio','Shop','Villa'],
         required:true
     }, 
+    roomsNumber:{type:Number},
+    bedrooms:{type:Number,required:true},
+    bathroms:{type:Number,required:true},
     addedBy:{
         type:Schema.Types.ObjectId,
         ref:'User',
@@ -19,28 +19,28 @@ const propertySchema =new Schema({
             secure_url:{type:String,required:true},
             public_id:{type:String,required:true},
         }],
-    size:{type:Number,required:true},
+    area:{type:Number,required:true},
     level:{type:Number,required:true},
-    roomsNumber:{type:Number,required:true},
     isFurnished:{type:Boolean,required:true},
-    details:{
+    essentials:{
         balacony:{type:Boolean,default:false},
         wifi:{type:Boolean,default:false},
         naturalGas:{type:Boolean,default:false},
         elevator:{type:Boolean,default:false},
         privateGarden:{type:Boolean,default:false},
         landLine:{type:Boolean,default:false},
+        kitchen:{type:Boolean,default:false}
     },
-    SurroundingFacilities:[{
-        type:String,
-        required:true,
-        lowercase:true,
-        unique:false
-}],
-    price:Number,
+//     SurroundingFacilities:[{
+//         type:String,
+//         // required:true,
+//         lowercase:true,
+//         // unique:false
+// }],
+    price:{type:Number,required:true},
     per:{
         type:String,
-        enum:['day','week','month','year'],
+        enum:['night','day','week','month','year'],
         default:'month'
     },
     numberOfGuests:{
@@ -53,8 +53,11 @@ const propertySchema =new Schema({
         default:'Available',
         enum:['Available','Booked']
     },
-    address:AddressSchema,
-    location:LocationScema,
+    address:{type:String, required:true},
+    location:{
+        long:{type:Number, required:true},
+        lat:{type:Number ,required:true}
+    },
     customId:String,
 
 },{
