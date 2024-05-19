@@ -23,13 +23,14 @@ const propertySchema =new Schema({
     level:{type:Number,required:true},
     isFurnished:{type:Boolean,required:true},
     essentials:{
-        balacony:{type:Boolean,default:false},
-        wifi:{type:Boolean,default:false},
-        naturalGas:{type:Boolean,default:false},
-        elevator:{type:Boolean,default:false},
-        privateGarden:{type:Boolean,default:false},
-        landLine:{type:Boolean,default:false},
-        kitchen:{type:Boolean,default:false}
+        // balacony:{type:Boolean,default:false},
+        // wifi:{type:Boolean,default:false},
+        // naturalGas:{type:Boolean,default:false},
+        // elevator:{type:Boolean,default:false},
+        // privateGarden:{type:Boolean,default:false},
+        // landLine:{type:Boolean,default:false},
+        // kitchen:{type:Boolean,default:false}
+        type:String,required:true
     },
 //     SurroundingFacilities:[{
 //         type:String,
