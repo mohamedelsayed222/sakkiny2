@@ -34,6 +34,7 @@ const customId = nanoid()
 const propertyImages = []
 const publicIds = []
 const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Property/${customId}`
+
 for (const file of req.files) {
   const { secure_url, public_id } = await cloudinary.uploader.upload(
     file.path,
@@ -60,6 +61,7 @@ const property=await propertyModel.create(
     address,
     location,
     details,
+    propertyImages,
     addedBy:user._id,
     customId
     
@@ -78,16 +80,17 @@ export const updateProperty=async (req,res,next)=>{
 const user=req.user
 const {propertyid}=req.params
 const {description,
-  title,
   type,
-  size,level,
+  area,level,
   roomsNumber,
+  bedrooms,
+  bathrooms,
   isFurnished,
   SurroundingFacility,
   price,per,
-  // address,
-  // location,
   numberOfGuests,
+  address,
+  location,
   details,
 }=req.body
   const property=await propertyModel.findById(propertyid)
@@ -111,15 +114,18 @@ const {description,
     property.SurroundingFacilities.push(SurroundingFacility)
   }
   if(description){property.description=description}
-  if(title){property.title=title}
   if(type){property.type=type}
   if(numberOfGuests){property.numberOfGuests =numberOfGuests}
+  if(bedrooms){property.bedrooms =bedrooms}
+  if(bathrooms){property.bathrooms =bathrooms}
+  if(address){property.address =address}
+  if(location){property.location =location}
   if(price){property.price =price}
   if(per){property.per =per}
   if(isFurnished){property.isFurnished =isFurnished}
   if(roomsNumber){property.roomsNumber =roomsNumber}
   if(level){property.level =level}
-  if(size){property.size =size}
+  if(area){property.size =size}
   if(details){
     property.details.balacony=details.balacony||property.details.balacony
     property.details.elevator=details.elevator||property.details.elevator
