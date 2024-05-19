@@ -6,14 +6,17 @@ import cloudinary from '../../utils/cloudinaryconfig.js'
 const nanoid = customAlphabet('123456_=!ascbhdtel', 5)
 export const addProperty=async(req,res,next)=>{
 const {description,
-    title,
     type,
-    size,level,
+    area,level,
     roomsNumber,
+    bedrooms,
+    bathroms,
     isFurnished,
     SurroundingFacilities,
     price,per,
     numberOfGuests,
+    address,
+    location,
     details}=req.body
     const user=req.user
 if(!user.isVerified){
@@ -45,18 +48,18 @@ for (const file of req.files) {
 const property=await propertyModel.create(
   {
     description,
-    title,
     type,
-    size,level,
-    address,
-    location,
+    area,level,
     roomsNumber,
+    bedrooms,
+    bathroms,
     isFurnished,
     SurroundingFacilities,
     price,per,
     numberOfGuests,
+    address,
+    location,
     details,
-    propertyImages,
     addedBy:user._id,
     customId
     
