@@ -9,7 +9,7 @@ const propertySchema =new Schema({
     }, 
     roomsNumber:{type:Number},
     bedrooms:{type:Number,required:true},
-    bathroms:{type:Number,required:true},
+    bathrooms:{type:Number,required:true},
     addedBy:{
         type:Schema.Types.ObjectId,
         ref:'User',
