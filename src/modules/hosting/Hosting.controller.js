@@ -17,7 +17,7 @@ const {description,
     numberOfGuests,
     address,
     location,
-    details}=req.body
+    essentials}=req.body
     const user=req.user
 if(!user.isVerified){
     return next (new Error("Please verify your identity",{cause:200}))
@@ -60,7 +60,7 @@ const property=await propertyModel.create(
     numberOfGuests,
     address,
     location,
-    details,
+    essentials,
     propertyImages,
     addedBy:user._id,
     customId
@@ -74,7 +74,6 @@ if (!property) {
 res.status(200).json({ message: 'Done', property })
 }
 
-// test
 
 export const updateProperty=async (req,res,next)=>{
 const user=req.user
@@ -91,7 +90,7 @@ const {description,
   numberOfGuests,
   address,
   location,
-  details,
+  essentials,
 }=req.body
   const property=await propertyModel.findById(propertyid)
   if(!property){
@@ -126,13 +125,15 @@ const {description,
   if(roomsNumber){property.roomsNumber =roomsNumber}
   if(level){property.level =level}
   if(area){property.size =size}
-  if(details){
-    property.details.balacony=details.balacony||property.details.balacony
-    property.details.elevator=details.elevator||property.details.elevator
-    property.details.landLine=details.landLine||property.details.landLine
-    property.details.privateGarden=details.privateGarden||property.details.privateGarden
-    property.details.naturalGas=details.naturalGas|| property.details.naturalGas
-    property.details.wifi=details.wifi|| property.details.wifi
+  if(essentials){
+    // property.details.balacony=details.balacony||property.details.balacony
+    // property.details.elevator=details.elevator||property.details.elevator
+    // property.details.landLine=details.landLine||property.details.landLine
+    // property.details.privateGarden=details.privateGarden||property.details.privateGarden
+    // property.details.naturalGas=details.naturalGas|| property.details.naturalGas
+    // property.details.wifi=details.wifi|| property.details.wifi
+
+    property.essentials=essentials
   }
   if (req.files.length){
     const propertyImages=[...property.propertyImages]
