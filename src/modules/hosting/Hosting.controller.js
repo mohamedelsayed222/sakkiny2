@@ -5,7 +5,8 @@ import propertyModel from '../../../DB/models/Property.model.js'
 import cloudinary from '../../utils/cloudinaryconfig.js'
 const nanoid = customAlphabet('123456_=!ascbhdtel', 5)
 export const addProperty=async(req,res,next)=>{
-const {description,
+const {
+    description,
     type,
     area,level,
     roomsNumber,

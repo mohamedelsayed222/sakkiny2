@@ -5,7 +5,8 @@ import propertyModel from '../../../DB/models/Property.model.js'
 
 export const getAllProperties=async(req,res,next)=>{
 const {select}=req.query
-const apiFeaturesInstance=new ApiFeatures( propertyModel.find(),req.query)
+const apiFeaturesInstance=new ApiFeatures( propertyModel.find()
+,req.query)
 .select()
 // .pagination()
     const properties=await apiFeaturesInstance.mongooseQuery
@@ -23,9 +24,9 @@ export const getSpecificProperty=async(req,res,next)=>{
 
 export const searchProperty=async(req,res,next)=>{
     const apiFeaturesInst=new ApiFeatures( propertyModel.find({}),req.query)
-    // .select()
+    .select()
     .filters()
-    // .sort()
+    .sort()
     // .pagination()
         const properties=await apiFeaturesInst.mongooseQuery
         if(!properties){
