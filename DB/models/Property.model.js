@@ -15,6 +15,7 @@ const propertySchema =new Schema({
         ref:'User',
         required:true
     },
+    //test
     propertyImages:[{
             secure_url:{type:String,required:true},
             public_id:{type:String,required:true},
