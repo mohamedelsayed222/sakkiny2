@@ -4,7 +4,7 @@ const propertySchema =new Schema({
     description:{type:String,required:true},
     type:{
         type:String,
-        enum:['Appartment','Duplex','Room','Studio','Shop','Villa'],
+        enum:['appartment','duplex','room','studio','shop','villa'],
         required:true
     }, 
     roomsNumber:{type:Number},
@@ -20,23 +20,21 @@ const propertySchema =new Schema({
             public_id:{type:String,required:true},
         }],
     area:{type:Number,required:true},
-    level:{type:Number,required:true},
+    level:{type:String,required:true},
     isFurnished:{type:Boolean,required:true},
     essentials:{
-        balacony:{type:Boolean,default:false},
+        balcony:{type:Boolean,default:false},
         wifi:{type:Boolean,default:false},
         naturalGas:{type:Boolean,default:false},
         elevator:{type:Boolean,default:false},
         privateGarden:{type:Boolean,default:false},
         landLine:{type:Boolean,default:false},
-        kitchen:{type:Boolean,default:false}
-        // type:String,required:true
-    },
+        kitchen:{type:Boolean,default:false},
+            },
 //     SurroundingFacilities:[{
 //         type:String,
-//         // required:true,
 //         lowercase:true,
-//         // unique:false
+
 // }],
     price:{type:Number,required:true},
     per:{
