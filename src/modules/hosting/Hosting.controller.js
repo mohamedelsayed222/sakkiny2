@@ -92,6 +92,7 @@ const {
   bedrooms,
   bathrooms,
   isFurnished,
+  //lll
   // SurroundingFacility,
   price,per,
   numberOfGuests,
