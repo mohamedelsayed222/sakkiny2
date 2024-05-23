@@ -18,7 +18,7 @@ body:
 }).required().options({allowUnknown:false})
 }
 
-export const login={
+export const login={ 
 body:
         joi.object({
         email:
@@ -35,3 +35,8 @@ body:
                 .required(),
 }).required().options({allowUnknown:false})
 }
+
+
+
+
+

@@ -7,14 +7,14 @@ const nanoid = customAlphabet('123456_=!ascbhdtel', 5)
 export const addProperty=async(req,res,next)=>{
 const {
     description,
-    type,
     area,level,
     roomsNumber,
     bedrooms,
     bathrooms,
     isFurnished,
-    SurroundingFacilities,
-    price,per,
+    // SurroundingFacilities,
+    price,
+    // per,
     numberOfGuests,
     address,
     location,
@@ -46,6 +46,11 @@ for (const file of req.files) {
   propertyImages.push({ secure_url, public_id })
   publicIds.push(public_id)
 }
+const type=req.body.type.toLowerCase();
+if(req.body.per){
+  const per=req.body.per.toLowerCase();
+}
+
 
 const property=await propertyModel.create(
   {
@@ -56,7 +61,7 @@ const property=await propertyModel.create(
     bedrooms,
     bathrooms,
     isFurnished,
-    SurroundingFacilities,
+    // SurroundingFacilities,
     price,per,
     numberOfGuests,
     address,
@@ -79,14 +84,15 @@ res.status(200).json({ message: 'Done', property })
 export const updateProperty=async (req,res,next)=>{
 const user=req.user
 const {propertyid}=req.params
-const {description,
+const {
+  description,
   type,
   area,level,
   roomsNumber,
   bedrooms,
   bathrooms,
   isFurnished,
-  SurroundingFacility,
+  // SurroundingFacility,
   price,per,
   numberOfGuests,
   address,
@@ -102,17 +108,19 @@ const {description,
   // console.log(property.addedBy===user._id);
   // console.log(property.addedBy.equals(user._id)); // Assuming `equals` is a method for object comparison
 
-
   // console.log({u:user._id,
   //   pu:property.addedBy
   // });
+
+  // if(SurroundingFacility){
+  // if(!property.SurroundingFacilities.includes(SurroundingFacility))
+  //   property.SurroundingFacilities.push(SurroundingFacility)
+  // }
+
   if(!property.addedBy==user._id){
-    return next(new Error("You are not authorized",{cause:200}))
-  }
-  if(SurroundingFacility){
-  if(!property.SurroundingFacilities.includes(SurroundingFacility))
-    property.SurroundingFacilities.push(SurroundingFacility)
-  }
+    return next(new Error("You are not authorized",{cause:200}))}
+
+
   if(description){property.description=description}
   if(type){property.type=type}
   if(numberOfGuests){property.numberOfGuests =numberOfGuests}
@@ -127,18 +135,18 @@ const {description,
   if(level){property.level =level}
   if(area){property.size =size}
   if(essentials){
-    // property.details.balacony=details.balacony||property.details.balacony
-    // property.details.elevator=details.elevator||property.details.elevator
-    // property.details.landLine=details.landLine||property.details.landLine
-    // property.details.privateGarden=details.privateGarden||property.details.privateGarden
-    // property.details.naturalGas=details.naturalGas|| property.details.naturalGas
-    // property.details.wifi=details.wifi|| property.details.wifi
+    property.essentials.balcony=essentials.balcony||property.essentials.balcony
+    property.essentials.elevator=essentials.elevator||property.essentials.elevator
+    property.essentials.landLine=essentials.landLine||property.essentials.landLine
+    property.essentials.privateGarden=essentials.privateGarden||property.essentials.privateGarden
+    property.essentials.naturalGas=essentials.naturalGas|| property.essentials.naturalGas
+    property.essentials.wifi=essentials.wifi|| property.essentials.wifi
+    property.essentials.kitchen=essentials.kitchen|| property.essentials.kitchen
 
     property.essentials=essentials
   }
   if (req.files.length){
     const propertyImages=[...property.propertyImages]
-    // console.log(propertyImages);
     const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Property/${property.customId}`
     for (const file of req.files) {
     const { secure_url, public_id } = await cloudinary.uploader.upload(
@@ -148,15 +156,12 @@ const {description,
     },
   )
   propertyImages.push({ public_id, secure_url })
-  // console.log(propertyImages);
-
 }
 property.propertyImages=propertyImages
 }
 await property.save()
 return res.status(200).json({message:"Updated",property})
 }
-
 
 export const deletePropertyImage=async (req,res,next)=>{
   const {propertyid}=req.params
@@ -212,9 +217,9 @@ const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${req.user.customId}/Pr
 
 
 
-export const hideProperty=(req,res,next)=>{
+// export const hideProperty=async(req,res,next)=>{
 
 
-}
+// }
 
 
