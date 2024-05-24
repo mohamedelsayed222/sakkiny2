@@ -40,6 +40,7 @@ export class ApiFeatures {
     return this
   }
   search(){
+    if(this.queryData.search){
     this.mongooseQuery.find({
       $or: [
         { address: { $regex: this.queryData.search, $options: 'i' } },
@@ -47,10 +48,9 @@ export class ApiFeatures {
         { type: { $regex: this.queryData.search, $options: 'i' } },
         { per: { $regex: this.queryData.search, $options: 'i' } },
         { propertyStatus: { $regex: this.queryData.search, $options: 'i' } },
-        // { price: { $regex: this.queryData.search} },
       ],
   })
-    return this
+}
+return this
   }
-
 }

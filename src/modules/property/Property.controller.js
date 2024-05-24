@@ -41,7 +41,7 @@ export const searchProperty=async(req,res,next)=>{
     .select()
     .filters()
     .sort()
-    .pagination()
+    // .pagination()
     .search()
         const properties=await apiFeaturesInst.mongooseQuery
         if(!properties){
