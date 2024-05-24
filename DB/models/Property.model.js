@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { LocationSchema } from "./location.schema.js";
 
 const propertySchema =new Schema({
     description:{type:String,required:true},
@@ -30,6 +31,10 @@ const propertySchema =new Schema({
         privateGarden:{type:Boolean,default:false},
         landLine:{type:Boolean,default:false},
         kitchen:{type:Boolean,default:false},
+        parking:{type:Boolean,default:false},
+        conditioning:{type:Boolean,default:false},
+        electricityMeter:{type:Boolean,default:false},
+        waterMeter:{type:Boolean,default:false}
             },
 //     SurroundingFacilities:[{
 //         type:String,
@@ -53,10 +58,7 @@ const propertySchema =new Schema({
         enum:['Available','Booked']
     },
     address:{type:String, required:true},
-    location:{
-        long:{type:Number, required:true},
-        lat:{type:Number ,required:true}
-    },
+    location:LocationSchema,
     customId:String,
 
 },{
