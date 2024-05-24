@@ -22,12 +22,27 @@ export const getSpecificProperty=async(req,res,next)=>{
         return res.status(200).json({message:"Done",property})
 }
 
+// export const filterProperty=async(req,res,next)=>{
+//     const apiFeaturesInst=new ApiFeatures( propertyModel.find({}),req.query)
+//     .select()
+//     .filters()
+//     .sort()
+//     // .pagination()
+//         const properties=await apiFeaturesInst.mongooseQuery
+//         if(!properties){
+//             return next(new error("Not found",{cause:404}))
+//         }
+//         return res.status(200).json({message:"Done",properties})
+
+// }
+
 export const searchProperty=async(req,res,next)=>{
     const apiFeaturesInst=new ApiFeatures( propertyModel.find({}),req.query)
     .select()
     .filters()
     .sort()
-    // .pagination()
+    .pagination()
+    .search()
         const properties=await apiFeaturesInst.mongooseQuery
         if(!properties){
             return next(new error("Not found",{cause:404}))

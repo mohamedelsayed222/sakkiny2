@@ -25,7 +25,7 @@ export class ApiFeatures {
 
   filters() {
     const queryInstance = { ...this.queryData }
-    console.log(queryInstance);
+    // console.log(queryInstance);
     const execludedKeys = ['page', 'size', 'sort', 'select', 'search']
     execludedKeys.forEach((key) => delete queryInstance[key])
     // console.log(queryInstance)
@@ -35,8 +35,22 @@ export class ApiFeatures {
         (operator) => `$${operator}`,
       ),
     )
-    console.log(queryFilter);
+    // console.log(queryFilter);
     this.mongooseQuery.find(queryFilter)
     return this
   }
+  search(){
+    this.mongooseQuery.find({
+      $or: [
+        { address: { $regex: this.queryData.search, $options: 'i' } },
+        { description: { $regex: this.queryData.search, $options: 'i' } },
+        { type: { $regex: this.queryData.search, $options: 'i' } },
+        { per: { $regex: this.queryData.search, $options: 'i' } },
+        { propertyStatus: { $regex: this.queryData.search, $options: 'i' } },
+        // { price: { $regex: this.queryData.search} },
+      ],
+  })
+    return this
+  }
+
 }
