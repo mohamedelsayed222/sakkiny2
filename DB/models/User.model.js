@@ -1,7 +1,5 @@
 import { Schema ,model } from "mongoose";
-// import { AddressSchema } from "./Address.schema.js";
-import { systemRoles } from "../../src/utils/systemRoles.js";
-
+import systemRoles from '../../src/utils/systemRoles.js'
 const userSchema=new Schema(
     {
         email:{
@@ -21,15 +19,14 @@ const userSchema=new Schema(
             type:String,
             default:systemRoles.User,
             enum:[systemRoles.User,
-                systemRoles.Owner,
-                systemRoles.Admin,
-                systemRoles.Service_provider,
-                systemRoles.Super_admin],
-        
+                systemRoles.Admin],
         },
         phoneNumber:{
             type:String,
             required:true
+        },
+        verificationCode:{
+            type:String
         },
         gender:{
             type:String,
@@ -49,19 +46,15 @@ const userSchema=new Schema(
             default:'Offline',
             enum:['Offline','Online']
         },
-        forgetCode: String,
         customId:String,
         confirmEmail:{
             type:Boolean,
             default:false
         },
-        isVerified:{
-            type:Boolean,
-            default:false
-        },
-        // userCurrentLocation:{
-
-        // },
+        likedProperties:[{
+            type:Schema.Types.ObjectId,
+            ref:'Property',
+        }]
     },{
         timestamps:true
     }

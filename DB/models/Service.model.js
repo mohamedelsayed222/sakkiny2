@@ -31,7 +31,7 @@ const serviceSchema=new Schema({
         public_id:{type:String,required:true},
     }],
     
-    address:{type:String, required:true},
+    // address:{type:String, required:true},
     location:LocationSchema 
 
 },{

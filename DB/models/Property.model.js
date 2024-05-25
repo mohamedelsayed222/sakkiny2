@@ -35,7 +35,7 @@ const propertySchema =new Schema({
         conditioning:{type:Boolean,default:false},
         electricityMeter:{type:Boolean,default:false},
         waterMeter:{type:Boolean,default:false}
-            },
+        },
 //     SurroundingFacilities:[{
 //         type:String,
 //         lowercase:true,
@@ -57,9 +57,10 @@ const propertySchema =new Schema({
         default:'Available',
         enum:['Available','Booked']
     },
-    address:{type:String, required:true},
+    // address:{type:String, required:true},
     location:LocationSchema,
     customId:String,
+    likesCount:{type:Number,}
 
 },{
     timestamps:true
@@ -89,4 +90,6 @@ export default propertyModel
 //     type:{type:String,enum: ["Point"],default:'Point'},
 //     coordinates:[{type:Number,required:true}]
 //   })
-  
+
+
+
