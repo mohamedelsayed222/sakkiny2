@@ -1,7 +1,17 @@
 import {Router} from 'express'
-const router= Router()
-
-
-
+import { isAuth } from '../../middlewares/auth.js'
+import * as serviceController from './Service.controller.js'
+import { multerCloudFunction } from '../../services/multerCloud.js'
+import { allowedExtensions } from '../../utils/allowedExtinsions.js'
+import { asyncHandler } from '../../utils/errorHandling.js'
+import {validationCoreFunction} from "../../middlewares/validation.js"
+import * as validators from './service.validation.js'
+const router=Router()
+router.post("/add",
+isAuth(),
+multerCloudFunction(allowedExtensions.Image).array('Images'),
+validationCoreFunction(validators.addService),
+asyncHandler(serviceController.addService)
+)
 
 export default router

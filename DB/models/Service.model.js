@@ -6,7 +6,7 @@ const serviceSchema=new Schema({
     userId:{
         type:Schema.Types.ObjectId,
         ref:'User',
-        required:true
+        required:true,
     },
     serviceCategory:{
         type:String,
@@ -32,8 +32,10 @@ const serviceSchema=new Schema({
     }],
     
     // address:{type:String, required:true},
-    location:LocationSchema 
-
+    location:LocationSchema,
+    country:String,
+    city:String,
+    customId:String,
 },{
     timestamps:true,
 })

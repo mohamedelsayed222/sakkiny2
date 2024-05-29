@@ -58,7 +58,7 @@ const propertySchema =new Schema({
         enum:['Available','Booked']
     },
     // address:{type:String, required:true},
-    location:LocationSchema,
+    location:{type:LocationSchema,required:true},
     customId:String,
     likesCount:{type:Number,}
 

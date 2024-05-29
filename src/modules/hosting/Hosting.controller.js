@@ -1,8 +1,8 @@
 
 // import userModel from '../../../DB/models/User.model.js'
-import { customAlphabet } from 'nanoid'
 import propertyModel from '../../../DB/models/Property.model.js'
 import cloudinary from '../../utils/cloudinaryconfig.js'
+import { customAlphabet } from 'nanoid'
 const nanoid = customAlphabet('123456_=!ascbhdtel', 5)
 export const addProperty=async(req,res,next)=>{
 const {

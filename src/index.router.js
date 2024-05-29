@@ -3,6 +3,7 @@ import userRouter from './modules/user/user.router.js'
 import authRouter from './modules/auth/auth.router.js'
 import propertyRouter from './modules/property/proprty.router.js'
 import hostingRouter from './modules/hosting/hosting.router.js'
+import serviceRouter from './modules/mintainance/service.router.js'
 import { globalErrorHandling } from "./utils/errorHandling.js";
 import bodyParser from 'body-parser';
 // import cors from 'cors'
@@ -20,6 +21,8 @@ const bootstrap=(app,express)=>{
     app.use('/auth',authRouter)
     app.use('/property',propertyRouter)
     app.use('/hosting',hostingRouter)
+    app.use('/service',serviceRouter)
+
     app.use(globalErrorHandling)
 }
 

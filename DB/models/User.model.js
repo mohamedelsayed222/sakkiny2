@@ -1,5 +1,5 @@
 import { Schema ,model } from "mongoose";
-import systemRoles from '../../src/utils/systemRoles.js'
+import {systemRoles} from '../../src/utils/systemRoles.js'
 const userSchema=new Schema(
     {
         email:{
@@ -48,6 +48,10 @@ const userSchema=new Schema(
         },
         customId:String,
         confirmEmail:{
+            type:Boolean,
+            default:false
+        },
+        isVerified:{
             type:Boolean,
             default:false
         },

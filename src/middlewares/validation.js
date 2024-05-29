@@ -48,7 +48,7 @@ export const validationCoreFunction = (schema) => {
 
     if (validationErrorArr.length) {
       req.validationErrors = validationErrorArr
-      return next(new Error('Validation Error', { cause: 400 }))
+      return next(new Error('Validation Error', { cause: 200 }))
     }
     next()
   }
