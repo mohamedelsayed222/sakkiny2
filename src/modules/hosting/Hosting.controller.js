@@ -47,11 +47,7 @@ for (const file of req.files) {
   publicIds.push(public_id)
 }
 const type=req.body.type.toLowerCase();
-if(req.body.per){
-  const per=req.body.per.toLowerCase();
-}
-
-
+const per=req.body.per?.toLowerCase();
 const property=await propertyModel.create(
   {
     description,
