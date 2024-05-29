@@ -42,3 +42,8 @@ const serviceSchema=new Schema({
 
 const serviceModel=model("Service",serviceSchema)
 export default serviceModel
+
+
+
+
+

@@ -1,8 +1,8 @@
 import joi from 'joi'
 
 const locationSchema=joi.object({
-    long:joi.number(),
-    lat:joi.number()})
+    longtitude:joi.number(),
+    latitude:joi.number()})
 const essentialsSchema=joi.object({
     balcony:joi.boolean(),
     kitchen:joi.boolean(),
@@ -21,12 +21,12 @@ body:
             level:joi.string().required(),
             roomsNumber:joi.number().positive(),
             bathrooms:joi.number().positive().required(),
-            badrooms:joi.number().positive().required(),
+            bedrooms:joi.number().positive().required(),
             isFurnished:joi.boolean(),
             price:joi.number().positive().required(),
             per:joi.string(),
             numberOfGuests:joi.string(),
-            address:joi.string().required(),
+            // address:joi.string().required(),
             location:locationSchema.required(),
             essentials:essentialsSchema.required()
 }).required().options({allowUnknown:false})
