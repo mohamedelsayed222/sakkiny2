@@ -71,9 +71,9 @@ const property=await propertyModel.create(
 if (!property) {
   await cloudinary.api.delete_resources(publicIds)
   await cloudinary.api.delete_folder(propertyFolder)
-  return next(new Error('trye again later', { cause: 400 }))
+  return next(new Error('trye again later', { cause: 404 }))
 }
-res.status(200).json({ message: 'Done', property })
+res.status(200).json({status:true, message: 'Done', property })
 }
 
 
