@@ -39,13 +39,12 @@ const propertySchema =new Schema({
 //     SurroundingFacilities:[{
 //         type:String,
 //         lowercase:true,
-
 // }],
     price:{type:Number,required:true},
     per:{
         type:String,
         enum:['daily','weekly','monthly','yearly'],
-        default:'month'
+        default:'monthly'
     },
     numberOfGuests:{
         type:String,
@@ -87,7 +86,7 @@ export default propertyModel
 //     country: {type:String,default:'Egypt',required:true},
 //   });
 
-//   export const LocationScema=new Schema({
+//   export const LocationSchema=new Schema({
 //     type:{type:String,enum: ["Point"],default:'Point'},
 //     coordinates:[{type:Number,required:true}]
 //   })
