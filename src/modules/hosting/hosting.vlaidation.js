@@ -1,7 +1,7 @@
 import joi from 'joi'
 
 const locationSchema=joi.object({
-    longtitude:joi.number(),
+    longitude:joi.number(),
     latitude:joi.number()})
 // const essentialsSchema=joi.object({
 //     balcony:joi.boolean(),
