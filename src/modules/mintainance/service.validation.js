@@ -2,8 +2,8 @@ import joi from "joi"
 
 
 const locationSchema=joi.object({
-    long:joi.number(),
-    lat:joi.number()})
+    longtitude:joi.number(),
+    latitude:joi.number()})
 
 export const addService={
     body:
