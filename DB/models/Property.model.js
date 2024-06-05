@@ -5,7 +5,7 @@ const propertySchema =new Schema({
     description:{type:String,required:true},
     type:{
         type:String,
-        enum:['appartment','duplex','room','studio','shop','villa'],
+        enum:['apartment','duplex','room','studio','shop','villa'],
         required:true
     }, 
     roomsNumber:{type:Number},
