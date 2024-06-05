@@ -63,7 +63,7 @@ export const addService=async(req,res,next)=>{
         return next(new Error('trye again later', { cause: 400 }))
     }
 
-    res.status(200).json({ message: 'Done', service })
+    res.status(200).json({ status:true, message: 'Done', service })
 
 
 

@@ -44,7 +44,7 @@ const propertySchema =new Schema({
     price:{type:Number,required:true},
     per:{
         type:String,
-        enum:['night','day','week','month','year'],
+        enum:['daily','weekly','monthly','yearly'],
         default:'month'
     },
     numberOfGuests:{

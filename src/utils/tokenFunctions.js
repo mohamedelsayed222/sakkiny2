@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 export const generateToken=({
     payload={},
     signature=process.env.DEFAULT_SIGNATURE,
-    expiresIn='1d'
+    expiresIn
 }={})=>{
     if(!Object.keys(payload).length){
         return false
