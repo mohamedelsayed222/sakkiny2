@@ -32,7 +32,7 @@ if(!user.customId){
   user.customId=customId
   await user.save()
 }
-
+const essentials={}
 if(details){
 console.log(details);
 const detailsarr =details.split(',')
@@ -41,8 +41,8 @@ const essentials={}
 for(const ele of detailsarr){
   essentials[ele]=true
 }
-console.log(essentials);
 }
+console.log(essentials);
 const customId = nanoid()
 const propertyImages = []
 const publicIds = []
