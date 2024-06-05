@@ -30,8 +30,9 @@ const serviceSchema=new Schema({
     
     // address:{type:String, required:true},
     location:LocationSchema,
-    country:String,
-    city:String,
+    address:{type:String,required:true},
+    // country:String,
+    // city:String,
     customId:String,
 },{
     timestamps:true,

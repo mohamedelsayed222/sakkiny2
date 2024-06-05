@@ -59,7 +59,7 @@ const propertySchema =new Schema({
     },
     // address:{type:String, required:true},
     location:{type:LocationSchema,required:true},
-    address:String,
+    address:{type:String,required:true},
     customId:String,
     likesCount:{type:Number,}
 

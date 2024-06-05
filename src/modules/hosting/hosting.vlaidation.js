@@ -26,7 +26,7 @@ body:
             price:joi.number().positive().required(),
             per:joi.string(),
             numberOfGuests:joi.string(),
-            // address:joi.string().required(),
+            address:joi.string().required(),
             location:locationSchema.required(),
             // essentials:essentialsSchema.required()
             details:joi.string(),
