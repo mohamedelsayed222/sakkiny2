@@ -3,15 +3,15 @@ import joi from 'joi'
 const locationSchema=joi.object({
     longtitude:joi.number(),
     latitude:joi.number()})
-const essentialsSchema=joi.object({
-    balcony:joi.boolean(),
-    kitchen:joi.boolean(),
-    landLine:joi.boolean(),
-    privateGarden:joi.boolean(),
-    elevator:joi.boolean(),
-    naturalGas:joi.boolean(),
-    wifi:joi.boolean()
-})
+// const essentialsSchema=joi.object({
+//     balcony:joi.boolean(),
+//     kitchen:joi.boolean(),
+//     landLine:joi.boolean(),
+//     privateGarden:joi.boolean(),
+//     elevator:joi.boolean(),
+//     naturalGas:joi.boolean(),
+//     wifi:joi.boolean()
+// })
 export const addProperty={
 body:
         joi.object({
@@ -28,7 +28,8 @@ body:
             numberOfGuests:joi.string(),
             // address:joi.string().required(),
             location:locationSchema.required(),
-            essentials:essentialsSchema.required()
+            // essentials:essentialsSchema.required()
+            details:joi.string(),
 }).required().options({allowUnknown:false})
 }
 

@@ -19,9 +19,6 @@ const serviceSchema=new Schema({
         type:String,
         required:true
     },
-    title:{
-        type:String,
-    },
     price:{
         type:Number,
         required:true

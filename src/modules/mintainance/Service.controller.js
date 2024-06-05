@@ -7,7 +7,6 @@ export const addService=async(req,res,next)=>{
     const user=req.user
     const {
         description,
-        title,
         price,
         country,
         city,
@@ -46,7 +45,6 @@ export const addService=async(req,res,next)=>{
     const serviceCategory=req.body.serviceCategory.toLowerCase();
     const service=await serviceModel.create({
         description,
-        title,
         price,
         serviceCategory,
         images,

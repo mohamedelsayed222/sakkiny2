@@ -18,7 +18,7 @@ const {
     numberOfGuests,
     address,
     location,
-    essentials}=req.body
+    }=req.body
     const user=req.user
 if(!user.isVerified){
     return next (new Error("Please verify your identity",{cause:200}))
@@ -30,6 +30,12 @@ if(!user.customId){
   const customId = nanoid()
   user.customId=customId
   await user.save()
+}
+
+const details =req.body.details.split(',')
+const essentials={}
+for(ele of details){
+  essentials[ele]=true
 }
 const customId = nanoid()
 const propertyImages = []
