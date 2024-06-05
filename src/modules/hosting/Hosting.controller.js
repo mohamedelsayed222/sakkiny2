@@ -18,6 +18,7 @@ const {
     numberOfGuests,
     address,
     location,
+    details
     }=req.body
     const user=req.user
 if(!user.isVerified){
@@ -31,12 +32,15 @@ if(!user.customId){
   user.customId=customId
   await user.save()
 }
-
-const details =req.body.details.split(',')
+console.log(details);
+const detailsarr =details.split(',')
+console.log(detailsarr);
 const essentials={}
-for(ele of details){
+for(ele of detailsarr){
   essentials[ele]=true
 }
+console.log(essentials);
+
 const customId = nanoid()
 const propertyImages = []
 const publicIds = []
