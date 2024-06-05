@@ -49,6 +49,7 @@ export const updateProperty={
                 numberOfGuests:joi.string(),
                 address:joi.string(),
                 location:locationSchema,
+                details:joi.string(),
                 // essentials:essentialsSchema
     }).required().options({allowUnknown:false})
     }

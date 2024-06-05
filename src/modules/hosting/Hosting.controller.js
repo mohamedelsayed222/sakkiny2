@@ -33,10 +33,10 @@ if(!user.customId){
   await user.save()
 }
 console.log(details);
-const detailsarr =details.split(',')
+const detailsarr =details?.split(',')
 console.log(detailsarr);
 const essentials={}
-for(ele of detailsarr){
+for(const ele of detailsarr){
   essentials[ele]=true
 }
 console.log(essentials);
