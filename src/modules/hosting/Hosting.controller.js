@@ -34,14 +34,14 @@ if(!user.customId){
 }
 
 if(details){
-// console.log(details);
+console.log(details);
 const detailsarr =details.split(',')
-// console.log(detailsarr);
+console.log(detailsarr);
 const essentials={}
 for(const ele of detailsarr){
   essentials[ele]=true
 }
-// console.log(essentials);
+console.log(essentials);
 }
 const customId = nanoid()
 const propertyImages = []
@@ -169,22 +169,22 @@ const {
   // console.log(str);
   //////////////////////////////////////////
 
-  if(details){
-    // console.log(details);
-    const detailsarr =details.split(',')
-    // console.log(detailsarr);
+//   if(details){
+//     // console.log(details);
+//     const detailsarr =details.split(',')
+//     // console.log(detailsarr);
    
-    for(const ele of detailsarr){
-      property.essentials[ele]=true
-    }
-    // console.log(essentials);
-    }
-    const str=''
-for (const key in property.essentials) {
-  console.log(key);
-  if(key==true)
-  str+=`${key}`
-}
+//     for(const ele of detailsarr){
+//       property.essentials[ele]=true
+//     }
+//     // console.log(essentials);
+//     }
+//     const str=''
+// for (const key in property.essentials) {
+//   console.log(key);
+//   if(key==true)
+//   str+=`${key}`
+// }
 
 
   if (req.files.length){
