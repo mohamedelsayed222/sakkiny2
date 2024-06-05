@@ -8,8 +8,9 @@ export const addService=async(req,res,next)=>{
     const {
         description,
         price,
-        country,
-        city,
+        // country,
+        // city,
+        address,
         location
     }=req.body
     if(!user.isVerified){
@@ -49,9 +50,10 @@ export const addService=async(req,res,next)=>{
         serviceCategory,
         images,
         customId,
-        country,
-        city,
+        // country,
+        // city,
         location,
+        address,
         userId:user._id
     })
 

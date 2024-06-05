@@ -32,15 +32,17 @@ if(!user.customId){
   user.customId=customId
   await user.save()
 }
-console.log(details);
-const detailsarr =details?.split(',')
-console.log(detailsarr);
+
+if(details){
+// console.log(details);
+const detailsarr =details.split(',')
+// console.log(detailsarr);
 const essentials={}
 for(const ele of detailsarr){
   essentials[ele]=true
 }
-console.log(essentials);
-
+// console.log(essentials);
+}
 const customId = nanoid()
 const propertyImages = []
 const publicIds = []
@@ -104,7 +106,7 @@ const {
   numberOfGuests,
   address,
   location,
-  essentials,
+  details,
 }=req.body
   const property=await propertyModel.findById(propertyid)
   if(!property){
@@ -141,17 +143,50 @@ const {
   if(roomsNumber){property.roomsNumber =roomsNumber}
   if(level){property.level =level}
   if(area){property.size =size}
-  if(essentials){
-    property.essentials.balcony=essentials.balcony||property.essentials.balcony
-    property.essentials.elevator=essentials.elevator||property.essentials.elevator
-    property.essentials.landLine=essentials.landLine||property.essentials.landLine
-    property.essentials.privateGarden=essentials.privateGarden||property.essentials.privateGarden
-    property.essentials.naturalGas=essentials.naturalGas|| property.essentials.naturalGas
-    property.essentials.wifi=essentials.wifi|| property.essentials.wifi
-    property.essentials.kitchen=essentials.kitchen|| property.essentials.kitchen
+  // if(essentials){
+  //   property.essentials.balcony=essentials.balcony||property.essentials.balcony
+  //   property.essentials.elevator=essentials.elevator||property.essentials.elevator
+  //   property.essentials.landLine=essentials.landLine||property.essentials.landLine
+  //   property.essentials.privateGarden=essentials.privateGarden||property.essentials.privateGarden
+  //   property.essentials.naturalGas=essentials.naturalGas|| property.essentials.naturalGas
+  //   property.essentials.wifi=essentials.wifi|| property.essentials.wifi
+  //   property.essentials.kitchen=essentials.kitchen|| property.essentials.kitchen
 
-    property.essentials=essentials
-  }
+  //   property.essentials=essentials
+  // }
+
+
+
+/////////////////////////////////////////////
+//TO DO 
+  // const arr=[]
+  // for ( key in essentials) {
+  //   console.log(essentials[key]==true);
+  //   if(essentials[key]===true)
+  //   arr.push(key)
+  // }
+  // const str=arr.join(',')
+  // console.log(str);
+  //////////////////////////////////////////
+
+  if(details){
+    // console.log(details);
+    const detailsarr =details.split(',')
+    // console.log(detailsarr);
+   
+    for(const ele of detailsarr){
+      property.essentials[ele]=true
+    }
+    // console.log(essentials);
+    }
+    const str=''
+for (const key in property.essentials) {
+  console.log(key);
+  if(key==true)
+  str+=`${key}`
+}
+
+
   if (req.files.length){
     const propertyImages=[...property.propertyImages]
     const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Property/${property.customId}`
