@@ -5,6 +5,8 @@ import cloudinary from '../../utils/cloudinaryconfig.js'
 import { customAlphabet } from 'nanoid'
 const nanoid = customAlphabet('123456_=!ascbhdtel', 5)
 export const addProperty=async(req,res,next)=>{
+
+  
 const {
     description,
     area,level,
@@ -24,40 +26,40 @@ const {
 if(!user.isVerified){
     return next (new Error("Please verify your identity",{cause:200}))
 }
-if (!req.files?.length||req.files.length<5){
-    return next (new Error("Please upload  at least 5 pictures of your property",{cause:200}))
-}
-if(!user.customId){
-  const customId = nanoid()
-  user.customId=customId
-  await user.save()
-}
+// if (!req.files?.length||req.files.length<5){
+//     return next (new Error("Please upload  at least 5 pictures of your property",{cause:200}))
+// }
+// if(!user.customId){
+//   const customId = nanoid()
+//   user.customId=customId
+//   await user.save()
+// }
 const essentials={}
 if(details){
-console.log(details);
+// console.log(details);
 const detailsarr =details.split(',')
-console.log(detailsarr);
+// console.log(detailsarr);
 const essentials={}
 for(const ele of detailsarr){
   essentials[ele]=true
 }
 }
-console.log(essentials);
-const customId = nanoid()
-const propertyImages = []
-const publicIds = []
-const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Property/${customId}`
+// console.log(essentials);
+// const customId = nanoid()
+// const propertyImages = []
+// const publicIds = []
+// const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Property/${customId}`
 
-for (const file of req.files) {
-  const { secure_url, public_id } = await cloudinary.uploader.upload(
-    file.path,
-    {
-      folder:propertyFolder 
-    },
-  )
-  propertyImages.push({ secure_url, public_id })
-  publicIds.push(public_id)
-}
+// for (const file of req.files) {
+//   const { secure_url, public_id } = await cloudinary.uploader.upload(
+//     file.path,
+//     {
+//       folder:propertyFolder 
+//     },
+//   )
+//   propertyImages.push({ secure_url, public_id })
+//   publicIds.push(public_id)
+// }
 const type=req.body.type.toLowerCase();
 const per=req.body.per?.toLowerCase();
 const property=await propertyModel.create(
@@ -69,21 +71,20 @@ const property=await propertyModel.create(
     bedrooms,
     bathrooms,
     isFurnished,
-    // SurroundingFacilities,
     price,per,
     numberOfGuests,
     address,
     location,
     essentials,
-    propertyImages,
     addedBy:user._id,
-    customId
-    
+    // propertyImages,
+    // customId
+    // SurroundingFacilities,
 })
 if (!property) {
-  await cloudinary.api.delete_resources(publicIds)
-  await cloudinary.api.delete_folder(propertyFolder)
-  return next(new Error('trye again later', { cause: 404 }))
+  // await cloudinary.api.delete_resources(publicIds)
+  // await cloudinary.api.delete_folder(propertyFolder)
+  return next(new Error('try again later', { cause: 404 }))
 }
 res.status(200).json({status:true, message: 'Done', property })
 }

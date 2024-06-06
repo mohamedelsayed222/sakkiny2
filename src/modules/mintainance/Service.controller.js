@@ -4,6 +4,10 @@ import { customAlphabet } from 'nanoid'
 const nanoid = customAlphabet('123456_=!ascbhdtel', 5)
 
 export const addService=async(req,res,next)=>{
+
+    console.log(req.body);
+    console.log("*******************************************");
+    console.log(req.files)
     const user=req.user
     const {
         description,
@@ -67,5 +71,22 @@ export const addService=async(req,res,next)=>{
 
 
 
+
+}
+
+export const updateService=async(req,res,next)=>{
+
+}
+
+export const searchService=async(req,res,next)=>{
+
+}
+
+export const deleteService=async(req,res,next)=>{
+
+}
+
+
+export const getService=async(req,res,next)=>{
 
 }
