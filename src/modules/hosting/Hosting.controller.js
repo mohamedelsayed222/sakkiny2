@@ -39,12 +39,12 @@ if(details){
 // console.log(details);
 const detailsarr =details.split(',')
 // console.log(detailsarr);
-const essentials={}
 for(const ele of detailsarr){
   essentials[ele]=true
 }
 }
-// console.log(essentials);
+console.log(essentials);
+
 const customId = nanoid()
 const propertyImages = []
 const publicIds = []
@@ -86,7 +86,7 @@ if (!property) {
   await cloudinary.api.delete_folder(propertyFolder)
   return next(new Error('try again later', { cause: 404 }))
 }
-res.status(200).json({status:true, message: 'Done' })
+res.status(200).json({status:true, message: 'Done',property })
 }
 
 
