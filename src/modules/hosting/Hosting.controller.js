@@ -29,22 +29,24 @@ if(!user.isVerified){
 if (!req.files?.length||req.files.length<5){
     return next (new Error("Please upload  at least 5 pictures of your property",{cause:200}))
 }
-if(!user.customId){
-  const customId = nanoid()
-  user.customId=customId
-  await user.save()
-}
+
+console.log(req.files);
 const essentials={}
 if(details){
-// console.log(details);
-const detailsarr =details.split(',')
-// console.log(detailsarr);
-for(const ele of detailsarr){
-  essentials[ele]=true
-}
-}
-console.log(essentials);
-
+  // console.log(details);
+  const detailsarr =details.split(',')
+  // console.log(detailsarr);
+  for(const ele of detailsarr){
+    essentials[ele]=true
+    }
+  }
+    console.log(essentials);
+  
+    if(!user.customId){
+      const customId = nanoid()
+      user.customId=customId
+      await user.save()
+      }
 const customId = nanoid()
 const propertyImages = []
 const publicIds = []
