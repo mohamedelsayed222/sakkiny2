@@ -10,13 +10,13 @@ const router= Router()
 
 router.post('/add',
     isAuth(),
-    multerCloudFunction(allowedExtensions.Image).array('PropertyImages'),
+    multerCloudFunction().array('PropertyImages'),
     validationCoreFunction(validators.addProperty),
     asyncHandler(hostingController.addProperty)
 )
 router.put('/update/:propertyid',
     isAuth(),
-    multerCloudFunction(allowedExtensions.Image).array('PropertyImages'),
+    multerCloudFunction().array('PropertyImages'),
     validationCoreFunction(validators.updateProperty),
     asyncHandler(hostingController.updateProperty)
 )

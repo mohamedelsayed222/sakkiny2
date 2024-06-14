@@ -4,10 +4,6 @@ import { customAlphabet } from 'nanoid'
 const nanoid = customAlphabet('123456_=!ascbhdtel', 5)
 
 export const addService=async(req,res,next)=>{
-
-    console.log(req.body);
-    console.log("*******************************************");
-    console.log(req.files)
     const user=req.user
     const {
         description,
@@ -88,5 +84,10 @@ export const deleteService=async(req,res,next)=>{
 
 
 export const getService=async(req,res,next)=>{
-
+    const apiFeaturesInstance=new ApiFeatures( serviceModel.find()
+    ,req.query)
+    .select()
+    // .pagination()
+        const services=await apiFeaturesInstance.mongooseQuery
+        return res.status(200).json({message:"Done",services})
 }

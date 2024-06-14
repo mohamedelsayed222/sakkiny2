@@ -9,9 +9,11 @@ import * as validators from './service.validation.js'
 const router=Router()
 router.post("/add",
 isAuth(),
-multerCloudFunction(allowedExtensions.Image).array('Images'),
+multerCloudFunction().array('Images'),
 validationCoreFunction(validators.addService),
 asyncHandler(serviceController.addService)
 )
+router.get('/',asyncHandler(serviceController.getService))
+
 
 export default router
