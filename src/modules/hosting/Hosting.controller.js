@@ -26,11 +26,11 @@ const {
 if(!user.isVerified){
     return next (new Error("Please verify your identity",{cause:200}))
 }
-if (!req.files?.length||req.files.length<5){
-    return next (new Error("Please upload  at least 5 pictures of your property",{cause:200}))
-}
+// if (!req.files?.length||req.files.length<5){
+//     return next (new Error("Please upload  at least 5 pictures of your property",{cause:200}))
+// }
 
-console.log(req.files);
+// // console.log(req.files);
 const essentials={}
 if(details){
   // console.log(details);
@@ -47,21 +47,22 @@ if(details){
       user.customId=customId
       await user.save()
       }
-const customId = nanoid()
-const propertyImages = []
-const publicIds = []
-const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Property/${customId}`
 
-for (const file of req.files) {
-  const { secure_url, public_id } = await cloudinary.uploader.upload(
-    file.path,
-    {
-      folder:propertyFolder 
-    },
-  )
-  propertyImages.push({ secure_url, public_id })
-  publicIds.push(public_id)
-}
+// const customId = nanoid()
+// const propertyImages = []
+// const publicIds = []
+// const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Property/${customId}`
+
+// for (const file of req.files) {
+//   const { secure_url, public_id } = await cloudinary.uploader.upload(
+//     file.path,
+//     {
+//       folder:propertyFolder 
+//     },
+//   )
+//   propertyImages.push({ secure_url, public_id })
+//   publicIds.push(public_id)
+// }
 const type=req.body.type.toLowerCase();
 const per=req.body.per?.toLowerCase();
 const property=await propertyModel.create(
@@ -79,13 +80,13 @@ const property=await propertyModel.create(
     location,
     essentials,
     addedBy:user._id,
-    propertyImages,
+    // propertyImages,
     customId
     // SurroundingFacilities,
 })
 if (!property) {
-  await cloudinary.api.delete_resources(publicIds)
-  await cloudinary.api.delete_folder(propertyFolder)
+  // await cloudinary.api.delete_resources(publicIds)
+  // await cloudinary.api.delete_folder(propertyFolder)
   return next(new Error('try again later', { cause: 404 }))
 }
 res.status(200).json({status:true, message: 'Done',property })
