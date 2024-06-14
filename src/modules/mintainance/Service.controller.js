@@ -91,5 +91,5 @@ export const getService=async(req,res,next)=>{
     .select()
     // .pagination()
         const services=await apiFeaturesInstance.mongooseQuery
-        return res.status(200).json({message:"Done",services})
+        return res.status(200).json({status:true,message:"Done",services})
 }

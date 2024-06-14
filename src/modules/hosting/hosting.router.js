@@ -10,19 +10,19 @@ const router= Router()
 
 router.post('/add',
     isAuth(),
-    // multerCloudFunction().array('PropertyImages'),
+    multerCloudFunction().array('PropertyImages'),
     validationCoreFunction(validators.addProperty),
     asyncHandler(hostingController.addProperty)
 )
 router.put('/update/:propertyid',
     isAuth(),
-    // multerCloudFunction().array('PropertyImages'),
+    multerCloudFunction().array('PropertyImages'),
     validationCoreFunction(validators.updateProperty),
     asyncHandler(hostingController.updateProperty)
 )
 router.delete('/update/:propertyid',
     isAuth(),
-    // multerCloudFunction(allowedExtensions.Image),
+    multerCloudFunction(allowedExtensions.Image),
     asyncHandler(hostingController.deletePropertyImage)
 )
 router.delete('/delete/:propertyid',

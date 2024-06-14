@@ -16,10 +16,10 @@ const propertySchema =new Schema({
         ref:'User',
         required:true
     },
-    // propertyImages:[{
-    //         secure_url:{type:String,required:true},
-    //         public_id:{type:String,required:true},
-    //     }],
+    propertyImages:[{
+            secure_url:{type:String,required:true},
+            public_id:{type:String,required:true},
+        }],
     area:{type:Number,required:true},
     level:{type:String,required:true},
     isFurnished:{type:Boolean,required:true},

@@ -6,63 +6,51 @@ import { customAlphabet } from 'nanoid'
 const nanoid = customAlphabet('123456_=!ascbhdtel', 5)
 export const addProperty=async(req,res,next)=>{
 
-  
 const {
-    description,
-    area,level,
-    roomsNumber,
-    bedrooms,
-    bathrooms,
-    isFurnished,
+    description,area,level,roomsNumber,
+    bedrooms,bathrooms,isFurnished,
+    price,numberOfGuests,address,
+    location,details
     // SurroundingFacilities,
-    price,
-    // per,
-    numberOfGuests,
-    address,
-    location,
-    details
     }=req.body
     const user=req.user
+///////////////////validation/////////////////////////
+
 if(!user.isVerified){
     return next (new Error("Please verify your identity",{cause:200}))
 }
-// if (!req.files?.length||req.files.length<5){
-//     return next (new Error("Please upload  at least 5 pictures of your property",{cause:200}))
-// }
-
-// // console.log(req.files);
+if (!req.files?.length||req.files.length<5){
+    return next (new Error("Please upload  at least 5 pictures of your property",{cause:200}))
+}
+///////////////////////////////////////////
 const essentials={}
 if(details){
-  // console.log(details);
   const detailsarr =details.split(',')
-  // console.log(detailsarr);
   for(const ele of detailsarr){
     essentials[ele]=true
     }
+  }  
+if(!user.customId){
+  const customId = nanoid()
+  user.customId=customId
+  await user.save()
   }
-    console.log(essentials);
-  
-    if(!user.customId){
-      const customId = nanoid()
-      user.customId=customId
-      await user.save()
-      }
 
-// const customId = nanoid()
-// const propertyImages = []
-// const publicIds = []
-// const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Property/${customId}`
+const customId = nanoid()
+const propertyImages = []
+const publicIds = []
+const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Property/${customId}`
 
-// for (const file of req.files) {
-//   const { secure_url, public_id } = await cloudinary.uploader.upload(
-//     file.path,
-//     {
-//       folder:propertyFolder 
-//     },
-//   )
-//   propertyImages.push({ secure_url, public_id })
-//   publicIds.push(public_id)
-// }
+for (const file of req.files) {
+  const { secure_url, public_id } = await cloudinary.uploader.upload(
+    file.path,
+    {
+      folder:propertyFolder 
+    },
+  )
+  propertyImages.push({ secure_url, public_id })
+  publicIds.push(public_id)
+}
 const type=req.body.type.toLowerCase();
 const per=req.body.per?.toLowerCase();
 const property=await propertyModel.create(
@@ -80,13 +68,13 @@ const property=await propertyModel.create(
     location,
     essentials,
     addedBy:user._id,
-    // propertyImages,
-    // customId
+    propertyImages,
+    customId
     // SurroundingFacilities,
 })
 if (!property) {
-  // await cloudinary.api.delete_resources(publicIds)
-  // await cloudinary.api.delete_folder(propertyFolder)
+  await cloudinary.api.delete_resources(publicIds)
+  await cloudinary.api.delete_folder(propertyFolder)
   return next(new Error('try again later', { cause: 404 }))
 }
 res.status(200).json({status:true, message: 'Done',property })
