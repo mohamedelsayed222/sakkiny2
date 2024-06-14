@@ -81,7 +81,7 @@ const property=await propertyModel.create(
     essentials,
     addedBy:user._id,
     // propertyImages,
-    customId
+    // customId
     // SurroundingFacilities,
 })
 if (!property) {
