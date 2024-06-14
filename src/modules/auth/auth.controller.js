@@ -170,7 +170,7 @@ export const login=asyncHandler(
             islogged:true
         },
         signature:process.env.TOKEN_SIGNATURE,
-        expiresIn:60*60*24
+        // expiresIn:60*60*24
 
     })
     if(!token){

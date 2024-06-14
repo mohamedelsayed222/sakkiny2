@@ -17,7 +17,7 @@ export const multerCloudFunction = (allowedExtensionsArr) => {
   }
 
   const fileUpload = multer({
-    fileFilter,
+    // fileFilter,
     storage,
   })
   return fileUpload
