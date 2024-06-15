@@ -22,12 +22,10 @@ router.put('/update/:propertyid',
 )
 router.delete('/update/:propertyid',
     isAuth(),
-    multerCloudFunction(allowedExtensions.Image),
     asyncHandler(hostingController.deletePropertyImage)
 )
 router.delete('/delete/:propertyid',
     isAuth(),
-    // multerCloudFunction(allowedExtensions.Image),
     asyncHandler(hostingController.deleteProperty)
 )
 
