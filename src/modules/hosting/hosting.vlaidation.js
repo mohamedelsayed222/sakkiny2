@@ -30,7 +30,7 @@ body:
             location:locationSchema.required(),
             // essentials:essentialsSchema.required()
             details:joi.string(),
-}).required().options({allowUnknown:false})
+}).required()
 }
 
 export const updateProperty={

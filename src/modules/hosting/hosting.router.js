@@ -16,7 +16,7 @@ router.post('/add',
 )
 router.put('/update/:propertyid',
     isAuth(),
-    multerCloudFunction().array('PropertyImages'),
+    multerCloudFunction().array('propertyImages'),
     validationCoreFunction(validators.updateProperty),
     asyncHandler(hostingController.updateProperty)
 )
