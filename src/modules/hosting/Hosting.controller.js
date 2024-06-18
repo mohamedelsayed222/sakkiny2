@@ -103,14 +103,7 @@ const {
   if(!property){
     return next(new Error("Property not exist",{cause:200}))
   }
-  // console.log(!property.addedBy==user._id);
-  // console.log(property.addedBy==user._id);
-  // console.log(property.addedBy===user._id);
-  // console.log(property.addedBy.equals(user._id)); // Assuming `equals` is a method for object comparison
 
-  // console.log({u:user._id,
-  //   pu:property.addedBy
-  // });
 
   // if(SurroundingFacility){
   // if(!property.SurroundingFacilities.includes(SurroundingFacility))
@@ -227,14 +220,12 @@ return res.status(201).json({message:"Deleted"})
 export const deleteProperty=async (req,res,next)=>{
   const {propertyid}=req.params
   const property=await propertyModel.findById(propertyid)
-  // console.log(property);
   if(!property){
     return next(new Error("Property not exist",{cause:200}))
   }
   if(!property.addedBy==req.user._id){
     return next(new Error("You are not authorized",{cause:200}))
   }
-  // console.log(property.customId);
 const publicIds=[]
 const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${req.user.customId}/Property/${property.customId}`
   for (const image of property.propertyImages) {

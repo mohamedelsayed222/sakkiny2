@@ -9,25 +9,16 @@ export const isAuth = (roles) => {
       if (!authorization) {
         return next(new Error('Please login first', { cause: 400 }))
       }
-      // console.log({authorization});
-
-      // if (!authorization.startsWith('')) {
-      //   return next(new Error('invalid token prefix', { cause: 400 }))
-      // }
-      // const splitedToken = authorization.split(' ')[1] || authorization.split('ecomm__')[1]
+     
       try {
         const decodedData = verifyToken({
           token: authorization,
           signature: process.env.TOKEN_SIGNATURE,
         })
-        // console.log({decodedData})
         const findUser = await userModel.findById(
           decodedData.id,
           // 'email userName role',
         )
-        // console.log({t:decodedData.id,
-        //   u:findUser._id
-        // });
         if (!findUser) {
           return next(new Error('Please SignUp', { cause: 400 }))
         }

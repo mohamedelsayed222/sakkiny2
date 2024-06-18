@@ -48,6 +48,8 @@ export class ApiFeatures {
         { type: { $regex: this.queryData.search, $options: 'i' } },
         { per: { $regex: this.queryData.search, $options: 'i' } },
         { propertyStatus: { $regex: this.queryData.search, $options: 'i' } },
+        { serviceCategory: { $regex: this.queryData.search, $options: 'i' } },
+
       ],
   })
 }

@@ -77,7 +77,6 @@ async(req,res,next)=>{
 }
 )
 
-
 export const confirmEmail=asyncHandler(
   async(req,res,next)=>{
     const {token}=req.params
@@ -94,7 +93,6 @@ export const confirmEmail=asyncHandler(
     </a>`
     )}
 )
-
 
 // export const resendConfirmEmail=asyncHandler(
 //     async(req,res,next)=>{
@@ -143,12 +141,9 @@ export const confirmEmail=asyncHandler(
 //   }
 // )
 
-
 export const login=asyncHandler(
     async(req,res,next)=>{
     const {email,password}=req.body
-    console.log(req.body)
-    console.log({email,password});
     const user=await userModel.findOne({email})
     if(!user){
     return next(new Error("Invalid Email email does not exist ",{cause:200}))
@@ -182,8 +177,6 @@ export const login=asyncHandler(
     return res.status(200).json({status:true,message:"You have been logged in successfully",data:user})
     }
 )
-
-
 
 export const forgetPassword=asyncHandler(
     async(req,res,next)=>{
@@ -223,8 +216,6 @@ export const forgetPassword=asyncHandler(
     }
 )
 
-
-
 export const resetPassword=asyncHandler(
     async(req,res,next)=>{
     const {token}=req.params
@@ -241,10 +232,9 @@ export const resetPassword=asyncHandler(
     }
     const hashpassword=bcrypt.hashSync(password,parseInt(process.env.SALT_ROUND))
     const user =await userModel.findOneAndUpdate({email:decoded.email},{password:hashpassword})
-    return user ? res.json({message:"Done"})
-        : res.send(`<a href="http://localhost:5000/auth/signup">
-        ooops you look like you don't sign up follow me to sign up
-        </a>`
+    return user ? res.json({status:true,message:"Done"})
+        : res.send(`
+        ooops you look like you don't sign up`
     )}
 )
 
@@ -262,7 +252,7 @@ export const updatePassword=asyncHandler(
         const hashpassword=bcrypt.hashSync(newPassword,parseInt(process.env.SALT_ROUND))
         user.password=hashpassword
         user.save()
-        return res.json({message:"Done your password updated"})
+        return res.json({status:true,message:"Done your password updated"})
     })
 
 
