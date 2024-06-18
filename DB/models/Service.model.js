@@ -3,7 +3,7 @@ import { LocationSchema } from "./location.schema.js";
 
 
 const serviceSchema=new Schema({
-    service:{
+    userId:{
         type:Schema.Types.ObjectId,
         ref:'User',
         required:true,

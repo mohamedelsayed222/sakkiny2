@@ -20,7 +20,7 @@ import bodyParser from 'body-parser';
     bodyParser.urlencoded({ extended: true }),
     validationCoreFunction(login),
     authController.login)
-    router.post("/resetPassword/",isAuth(),authController.resetPassword)
+    router.post("/resetPassword",isAuth(),authController.resetPassword)
 
 
 

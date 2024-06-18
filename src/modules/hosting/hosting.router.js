@@ -5,7 +5,7 @@ import { multerCloudFunction } from '../../services/multerCloud.js'
 import { allowedExtensions } from '../../utils/allowedExtinsions.js'
 import { asyncHandler } from '../../utils/errorHandling.js'
 import {validationCoreFunction} from "../../middlewares/validation.js"
-import * as validators from './hosting.vlaidation.js'
+import * as validators from './hosting.validation.js'
 const router= Router()
 
 router.post('/add',
@@ -20,7 +20,7 @@ router.put('/update/:propertyid',
     validationCoreFunction(validators.updateProperty),
     asyncHandler(hostingController.updateProperty)
 )
-router.put('/update/:propertyid',
+router.put('/deleteimage/:propertyid',
     isAuth(),
     asyncHandler(hostingController.deletePropertyImage)
 )

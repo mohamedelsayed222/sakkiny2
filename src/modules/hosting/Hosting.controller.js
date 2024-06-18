@@ -92,7 +92,6 @@ const {
   bedrooms,
   bathrooms,
   isFurnished,
-  //lll
   // SurroundingFacility,
   price,per,
   numberOfGuests,
@@ -118,7 +117,7 @@ const {
   //   property.SurroundingFacilities.push(SurroundingFacility)
   // }
 
-  if(!property.addedBy==user._id){
+  if(!property.addedBy.equals(user._id)){
     return next(new Error("You are not authorized",{cause:200}))}
 
 
@@ -204,7 +203,7 @@ export const deletePropertyImage=async (req,res,next)=>{
   if(!property){
     return next(new Error("Property not exist",{cause:200}))
   }
-  if(!property.addedBy==req.user._id){
+  if(!property.addedBy.equals(req.user._id)){
     return next(new Error("You are not authorized",{cause:200}))
   }
   // if(!property.propertyImages.includes({secure_url,public_id,_id})){
@@ -212,11 +211,11 @@ export const deletePropertyImage=async (req,res,next)=>{
   //   return next(new Error("Wrong Image",{cause:400}))
   // }
 
-  const image=property.propertyImages.find(i=>i.public_id=public_id)
+  const image=property.propertyImages.find(i=>i.public_id==public_id)
   if(!image){
       return next(new Error("Wrong Image",{cause:200}))
   }
-  console.log(image);
+
   property.propertyImages.splice(property.propertyImages.indexOf(image),1)
   await cloudinary.uploader.destroy(public_id)
   await property.save()
@@ -227,7 +226,7 @@ return res.status(201).json({message:"Deleted"})
 
 export const deleteProperty=async (req,res,next)=>{
   const {propertyid}=req.params
-  const property=await propertyModel.findByIdAndDelete(propertyid)
+  const property=await propertyModel.findById(propertyid)
   // console.log(property);
   if(!property){
     return next(new Error("Property not exist",{cause:200}))
@@ -243,9 +242,10 @@ const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${req.user.customId}/Pr
   publicIds.push(image.public_id)
   }
   // await cloudinary.api.delete_all_resources(propertyFolder)
+  await propertyModel.deleteOne({_id:propertyid})
   await cloudinary.api.delete_resources(publicIds)
   await cloudinary.api.delete_folder(propertyFolder)
-  return res.status(201).json({message:"Deleted"})
+  return res.status(201).json({status:true,message:"Deleted"})
 }
 
 

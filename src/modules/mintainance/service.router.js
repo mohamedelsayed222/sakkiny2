@@ -29,7 +29,7 @@ router.delete("/delete/:serviceId",
     asyncHandler(serviceController.deleteService)
 )
 
-router.put("/delete/:serviceId",
+router.put("/deleteimage/:serviceId",
     isAuth(),
     asyncHandler(serviceController.deleteImage)
 )

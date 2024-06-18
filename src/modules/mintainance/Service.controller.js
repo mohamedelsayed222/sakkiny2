@@ -92,15 +92,15 @@ export const updateService=async(req,res,next)=>{
         return next(new Error("Service not exist",{cause:200}))
     }
     
-    if(!service.userId==user._id){
+    if(!service.userId.equals(user._id)){
         return next(new Error("You are not authorized",{cause:200}))}
     
     
     if(description){service.description=description}
     if(serviceCategory){service.serviceCategory=serviceCategory.toLowerCase()}
-    if(address){property.address =address}
-    if(location){property.location =location}
-    if(price){property.price =price}
+    if(address){service.address =address}
+    if(location){service.location =location}
+    if(price){service.price =price}
     if (req.files.length){
         const serviceImages=[...service.images]
         const serviceFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Service/${service.customId}`
@@ -116,7 +116,7 @@ export const updateService=async(req,res,next)=>{
     service.images=serviceImages
     }
     await service.save()
-    return res.status(200).json({message:"Updated",service})
+    return res.status(200).json({status:true,message:"Updated",service})
 }
 
 export const searchService=async(req,res,next)=>{
@@ -135,34 +135,34 @@ export const searchService=async(req,res,next)=>{
 }
 
 export const deleteService=async(req,res,next)=>{
+    const user=req.user
     const {serviceId}=req.params
-    const service=await serviceModel.findByIdAndDelete(serviceId)
+    const service=await serviceModel.findById(serviceId)
     if(!service){
       return next(new Error("Service not exist",{cause:200}))
     }
     if(!service.userId==req.user._id){
       return next(new Error("You are not authorized",{cause:200}))
     }
-  const publicIds=[]
-  const serviceFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Service/${service.customId}`
-  for (const image of service.images) {
-    publicIds.push(image.public_id)
+    const publicIds=[]
+    const serviceFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Service/${service.customId}`
+    for (const image of service.images) {
+        publicIds.push(image.public_id)
     }
+    await serviceModel.deleteOne({_id:serviceId})
     await cloudinary.api.delete_resources(publicIds)
     await cloudinary.api.delete_folder(serviceFolder)
-    return res.status(201).json({message:"Deleted"})
+    return res.status(201).json({status:true,message:"Deleted"})
 }
-
 
 export const getSpecificService=async(req,res,next)=>{
     const {serviceId}=req.params
     const {select}=req.query
-    const apiFeaturesInstance=new ApiFeatures( propertyModel.findById({_id:serviceId}),req.query)
+    const apiFeaturesInstance=new ApiFeatures( serviceModel.findById({_id:serviceId}),req.query)
     .select()
         const service=await apiFeaturesInstance.mongooseQuery
         return res.status(200).json({message:"Done",service})
 }
-
 
 export const deleteImage=async (req,res,next)=>{
     const {serviceId}=req.params
@@ -171,15 +171,15 @@ export const deleteImage=async (req,res,next)=>{
     if(!service){
         return next(new Error("Service not exist",{cause:200}))
     }
-    if(!service.userId==req.user._id){
+    if(!service.userId.equals(req.user._id)){
         return next(new Error("You are not authorized",{cause:200}))
     }
-    const image=property.propertyImages.find(i=>i.public_id=public_id)
+    const image=service.images.find(i=>i.public_id==public_id)
     if(!image){
         return next(new Error("Wrong Image",{cause:200}))
     }
-    service.images.splice(service.serviceModel.indexOf(image),1)
+    service.images.splice(service.images.indexOf(image),1)
     await cloudinary.uploader.destroy(public_id)
-    await property.save()
+    await service.save()
     return res.status(201).json({message:"Deleted"})
     }
