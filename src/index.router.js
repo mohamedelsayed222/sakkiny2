@@ -2,6 +2,7 @@ import connectDB from "../DB/connection.js";
 import userRouter from './modules/user/user.router.js'
 import authRouter from './modules/auth/auth.router.js'
 import propertyRouter from './modules/property/proprty.router.js'
+import identityRouter from './modules/identity/identity.router.js'
 import hostingRouter from './modules/hosting/hosting.router.js'
 import serviceRouter from './modules/mintainance/service.router.js'
 import { globalErrorHandling } from "./utils/errorHandling.js";
@@ -20,6 +21,7 @@ const bootstrap=(app,express)=>{
     app.use('/user',userRouter)
     app.use('/auth',authRouter)
     app.use('/property',propertyRouter)
+    app.use('/identity',identityRouter) 
     app.use('/hosting',hostingRouter)
     app.use('/service',serviceRouter)
 
