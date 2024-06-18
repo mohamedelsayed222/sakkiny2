@@ -7,13 +7,37 @@ import { asyncHandler } from '../../utils/errorHandling.js'
 import {validationCoreFunction} from "../../middlewares/validation.js"
 import * as validators from './service.validation.js'
 const router=Router()
+
 router.post("/add",
 isAuth(),
 multerCloudFunction().array('Images'),
 validationCoreFunction(validators.addService),
 asyncHandler(serviceController.addService)
 )
+
 router.get('/',asyncHandler(serviceController.getService))
 
+router.put("/update/:serviceId",
+isAuth(),
+multerCloudFunction().array('Images'),
+validationCoreFunction(validators.updateService),
+asyncHandler(serviceController.updateService)
+)
+
+router.delete("/delete/:serviceId",
+    isAuth(),
+    asyncHandler(serviceController.deleteService)
+)
+
+router.put("/delete/:serviceId",
+    isAuth(),
+    asyncHandler(serviceController.deleteImage)
+)
+
+router.get('/search',asyncHandler(serviceController.searchService))
+
+
+router.get('/:serviceId',asyncHandler(serviceController.getSpecificService))
 
 export default router
+

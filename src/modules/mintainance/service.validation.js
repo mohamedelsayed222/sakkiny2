@@ -15,5 +15,17 @@ export const addService={
                 address:joi.string().required(),
                 serviceCategory:joi.string().required(),
                 location:locationSchema
-    }).required().options({allowUnknown:false})
+    }).required()
     }
+
+
+    export const updateService={
+        body:
+                joi.object({
+                    description :joi.string().min(10).max(500),
+                    price:joi.number().positive(),
+                    address:joi.string(),
+                    serviceCategory:joi.string(),
+                    location:locationSchema
+        }).required()
+        }

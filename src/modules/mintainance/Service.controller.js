@@ -20,7 +20,7 @@ export const addService=async(req,res,next)=>{
     }
 
     if (!req.files?.length){
-        return next (new Error("Please upload pictures of your service",{cause:200}))
+        return next (new Error("Please upload pictures showing your service",{cause:200}))
     }
 
     if(!user.customId){
@@ -72,19 +72,6 @@ export const addService=async(req,res,next)=>{
 
 }
 
-export const updateService=async(req,res,next)=>{
-
-}
-
-export const searchService=async(req,res,next)=>{
-
-}
-
-export const deleteService=async(req,res,next)=>{
-
-}
-
-
 export const getService=async(req,res,next)=>{
     const apiFeaturesInstance=new ApiFeatures( serviceModel.find()
     ,req.query)
@@ -93,3 +80,106 @@ export const getService=async(req,res,next)=>{
         const services=await apiFeaturesInstance.mongooseQuery
         return res.status(200).json({status:true,message:"Done",services})
 }
+
+export const updateService=async(req,res,next)=>{
+    const user=req.user
+    const {serviceId}=req.params
+    const {
+    description,address,location,price,serviceCategory
+    }=req.body
+    const service=await serviceModel.findById(serviceId)
+    if(!service){
+        return next(new Error("Service not exist",{cause:200}))
+    }
+    
+    if(!service.userId==user._id){
+        return next(new Error("You are not authorized",{cause:200}))}
+    
+    
+    if(description){service.description=description}
+    if(serviceCategory){service.serviceCategory=serviceCategory.toLowerCase()}
+    if(address){property.address =address}
+    if(location){property.location =location}
+    if(price){property.price =price}
+    if (req.files.length){
+        const serviceImages=[...service.images]
+        const serviceFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Service/${service.customId}`
+        for (const file of req.files) {
+        const { secure_url, public_id } = await cloudinary.uploader.upload(
+        file.path,
+        {
+        folder:serviceFolder 
+        },
+    )
+    serviceImages.push({ public_id, secure_url })
+    }
+    service.images=serviceImages
+    }
+    await service.save()
+    return res.status(200).json({message:"Updated",service})
+}
+
+export const searchService=async(req,res,next)=>{
+    const apiFeaturesInst=new ApiFeatures( serviceModel.find({}),req.query)
+    .select()
+    .filters()
+    .sort()
+    // .pagination()
+    .search()
+        const services=await apiFeaturesInst.mongooseQuery
+        if(!services){
+            return next(new error("Not found",{cause:404}))
+        }
+        return res.status(200).json({message:"Done",services})
+
+}
+
+export const deleteService=async(req,res,next)=>{
+    const {serviceId}=req.params
+    const service=await serviceModel.findByIdAndDelete(serviceId)
+    if(!service){
+      return next(new Error("Service not exist",{cause:200}))
+    }
+    if(!service.userId==req.user._id){
+      return next(new Error("You are not authorized",{cause:200}))
+    }
+  const publicIds=[]
+  const serviceFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Service/${service.customId}`
+  for (const image of service.images) {
+    publicIds.push(image.public_id)
+    }
+    await cloudinary.api.delete_resources(publicIds)
+    await cloudinary.api.delete_folder(serviceFolder)
+    return res.status(201).json({message:"Deleted"})
+}
+
+
+export const getSpecificService=async(req,res,next)=>{
+    const {serviceId}=req.params
+    const {select}=req.query
+    const apiFeaturesInstance=new ApiFeatures( propertyModel.findById({_id:serviceId}),req.query)
+    .select()
+        const service=await apiFeaturesInstance.mongooseQuery
+        return res.status(200).json({message:"Done",service})
+}
+
+
+export const deleteImage=async (req,res,next)=>{
+    const {serviceId}=req.params
+    const {public_id}=req.body
+    const service=await serviceModel.findById(serviceId)
+    if(!service){
+        return next(new Error("Service not exist",{cause:200}))
+    }
+    if(!service.userId==req.user._id){
+        return next(new Error("You are not authorized",{cause:200}))
+    }
+    const image=property.propertyImages.find(i=>i.public_id=public_id)
+    if(!image){
+        return next(new Error("Wrong Image",{cause:200}))
+    }
+    service.images.splice(service.serviceModel.indexOf(image),1)
+    await cloudinary.uploader.destroy(public_id)
+    await property.save()
+    return res.status(201).json({message:"Deleted"})
+    }
