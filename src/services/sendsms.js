@@ -1,6 +1,6 @@
 import { Vonage } from '@vonage/server-sdk'
 const vonage = new Vonage({
-  apiKey: "b986c9c3",
+  apiKey: "1738a711",
   apiSecret: process.env.Api_Secret_Vonage
 })
 const sendSMS=async({from="Vonage APIs",to,text})=>{

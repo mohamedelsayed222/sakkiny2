@@ -12,7 +12,7 @@ export const sendVerificationNumber=async(req,res,next)=>{
     const code =nanoid()
     const identity=await identityModel.create({verificationCode:code,userId:user._id})
     const sent=sendSMS({to:phoneNumber,text:`
-    Wecome from Sakkiny your verification code is ${code}
+    Welcome from Sakkiny your verification code is ${code}
     Thank you  
     `})
     if(!sent){
