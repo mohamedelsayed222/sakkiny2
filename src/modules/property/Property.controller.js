@@ -6,6 +6,8 @@ import propertyModel from '../../../DB/models/Property.model.js'
 export const getAllProperties=async(req,res,next)=>{
 const {select}=req.query
 const apiFeaturesInstance=new ApiFeatures( propertyModel.find()
+    .populate({path:'addedBy',
+        select:'email name phoneNumber gender status profilePicture -_id'})
 ,req.query)
 .select()
 // .pagination()
@@ -16,28 +18,19 @@ const apiFeaturesInstance=new ApiFeatures( propertyModel.find()
 export const getSpecificProperty=async(req,res,next)=>{
     const {propertyId}=req.params
     const {select}=req.query
-    const apiFeaturesInstance=new ApiFeatures( propertyModel.findById({_id:propertyId}),req.query)
+    const apiFeaturesInstance=new ApiFeatures( propertyModel.findById({_id:propertyId})
+    .populate({path:'addedBy',
+        select:'email name phoneNumber gender status profilePicture -_id'})
+    ,req.query)
     .select()
         const property=await apiFeaturesInstance.mongooseQuery
         return res.status(200).json({message:"Done",property})
 }
 
-// export const filterProperty=async(req,res,next)=>{
-//     const apiFeaturesInst=new ApiFeatures( propertyModel.find({}),req.query)
-//     .select()
-//     .filters()
-//     .sort()
-//     // .pagination()
-//         const properties=await apiFeaturesInst.mongooseQuery
-//         if(!properties){
-//             return next(new error("Not found",{cause:404}))
-//         }
-//         return res.status(200).json({message:"Done",properties})
-
-// }
-
 export const searchProperty=async(req,res,next)=>{
-    const apiFeaturesInst=new ApiFeatures( propertyModel.find({}),req.query)
+    const apiFeaturesInst=new ApiFeatures( propertyModel.find({}).populate({path:'addedBy',
+        select:'email name phoneNumber gender status profilePicture -_id'})
+        ,req.query)
     .select()
     .filters()
     .sort()

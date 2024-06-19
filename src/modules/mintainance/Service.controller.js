@@ -73,9 +73,11 @@ export const addService=async(req,res,next)=>{
 }
 
 export const getService=async(req,res,next)=>{
-    const apiFeaturesInstance=new ApiFeatures( serviceModel.find()
+    const apiFeaturesInstance=new ApiFeatures( serviceModel.find().populate({path:'userId',
+        select:'email name phoneNumber gender status profilePicture -_id'})
     ,req.query)
     .select()
+ 
     // .pagination()
         const services=await apiFeaturesInstance.mongooseQuery
         return res.status(200).json({status:true,message:"Done",services})
@@ -120,7 +122,10 @@ export const updateService=async(req,res,next)=>{
 }
 
 export const searchService=async(req,res,next)=>{
-    const apiFeaturesInst=new ApiFeatures( serviceModel.find({}),req.query)
+    const apiFeaturesInst=new ApiFeatures( serviceModel.find({})
+    .populate({path:'userId',
+        select:'email name phoneNumber gender status profilePicture -_id'})
+    ,req.query)
     .select()
     .filters()
     .sort()
@@ -158,7 +163,10 @@ export const deleteService=async(req,res,next)=>{
 export const getSpecificService=async(req,res,next)=>{
     const {serviceId}=req.params
     const {select}=req.query
-    const apiFeaturesInstance=new ApiFeatures( serviceModel.findById({_id:serviceId}),req.query)
+    const apiFeaturesInstance=new ApiFeatures( serviceModel.findById({_id:serviceId})
+    .populate({path:'userId',
+        select:'email name phoneNumber gender status profilePicture -_id'})
+    ,req.query)
     .select()
         const service=await apiFeaturesInstance.mongooseQuery
         return res.status(200).json({message:"Done",service})
