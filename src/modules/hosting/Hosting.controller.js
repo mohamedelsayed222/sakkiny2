@@ -53,6 +53,7 @@ for (const file of req.files) {
 }
 const type=req.body.type.toLowerCase();
 const per=req.body.per?.toLowerCase();
+const addedByType=req.body.addedByType?.toLowerCase()
 const property=await propertyModel.create(
   {
     description,
@@ -68,6 +69,7 @@ const property=await propertyModel.create(
     location,
     essentials,
     addedBy:user._id,
+    addedByType
     propertyImages,
     customId
     // SurroundingFacilities,

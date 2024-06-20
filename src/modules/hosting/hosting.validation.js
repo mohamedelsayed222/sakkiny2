@@ -25,12 +25,13 @@ body:
             isFurnished:joi.boolean(),
             price:joi.number().positive().required(),
             per:joi.string(),
+            addedByType:joi.string().required(),
             numberOfGuests:joi.string(),
             address:joi.string().required(),
             location:locationSchema.required(),
             // essentials:essentialsSchema.required()
             details:joi.string(),
-}).required()
+}).required().options({allowUnknown:false})
 }
 
 export const updateProperty={

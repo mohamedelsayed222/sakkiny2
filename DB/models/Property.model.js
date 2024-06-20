@@ -16,6 +16,11 @@ const propertySchema =new Schema({
         ref:'User',
         required:true
     },
+    addedByType:{
+        type:String,
+        default:'owner',
+        enum:['owner','broker','real state company','government agencies'
+        ]},
     propertyImages:[{
             secure_url:{type:String,required:true},
             public_id:{type:String,required:true},
@@ -23,6 +28,7 @@ const propertySchema =new Schema({
     area:{type:Number,required:true},
     level:{type:String,required:true},
     isFurnished:{type:Boolean,required:true},
+
     essentials:{
         balcony:{type:Boolean,default:false},
         wifi:{type:Boolean,default:false},
