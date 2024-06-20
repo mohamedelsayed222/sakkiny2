@@ -79,8 +79,10 @@ if (!property) {
   await cloudinary.api.delete_folder(propertyFolder)
   return next(new Error('try again later', { cause: 404 }))
 }
-res.status(200).json({status:true, message: 'Done',property })
+res.status(201).json({status:true, message: 'Done',property })
 }
+
+
 
 
 export const updateProperty=async (req,res,next)=>{
@@ -203,7 +205,7 @@ export const deletePropertyImage=async (req,res,next)=>{
   property.propertyImages.splice(property.propertyImages.indexOf(image),1)
   await cloudinary.uploader.destroy(public_id)
   await property.save()
-return res.status(201).json({message:"Deleted"})
+return res.status(200).json({message:"Deleted"})
 }
 
 

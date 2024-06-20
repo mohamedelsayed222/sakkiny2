@@ -65,7 +65,7 @@ export const addService=async(req,res,next)=>{
         return next(new Error('trye again later', { cause: 400 }))
     }
 
-    res.status(200).json({ status:true, message: 'Done', service })
+    res.status(201).json({ status:true, message: 'Done', service })
 
 
 
@@ -135,7 +135,7 @@ export const searchService=async(req,res,next)=>{
         if(!services){
             return next(new error("Not found",{cause:404}))
         }
-        return res.status(200).json({message:"Done",services})
+        return res.status(200).json({status:true,message:"Done",services})
 
 }
 
@@ -169,7 +169,7 @@ export const getSpecificService=async(req,res,next)=>{
     ,req.query)
     .select()
         const service=await apiFeaturesInstance.mongooseQuery
-        return res.status(200).json({message:"Done",service})
+        return res.status(200).json({status:true,message:"Done",service})
 }
 
 export const deleteImage=async (req,res,next)=>{
@@ -189,5 +189,5 @@ export const deleteImage=async (req,res,next)=>{
     service.images.splice(service.images.indexOf(image),1)
     await cloudinary.uploader.destroy(public_id)
     await service.save()
-    return res.status(201).json({message:"Deleted"})
+    return res.status(201).json({status:true, message:"Deleted"})
     }

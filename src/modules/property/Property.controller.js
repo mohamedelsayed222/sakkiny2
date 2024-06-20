@@ -12,7 +12,7 @@ const apiFeaturesInstance=new ApiFeatures( propertyModel.find()
 .select()
 // .pagination()
     const properties=await apiFeaturesInstance.mongooseQuery
-    return res.status(200).json({message:"Done",properties})
+    return res.status(200).json({status:true, message:"Done",properties})
 }
 
 export const getSpecificProperty=async(req,res,next)=>{
@@ -24,7 +24,7 @@ export const getSpecificProperty=async(req,res,next)=>{
     ,req.query)
     .select()
         const property=await apiFeaturesInstance.mongooseQuery
-        return res.status(200).json({message:"Done",property})
+        return res.status(200).json({status:true, message:"Done",property})
 }
 
 export const searchProperty=async(req,res,next)=>{
@@ -40,7 +40,7 @@ export const searchProperty=async(req,res,next)=>{
         if(!properties){
             return next(new error("Not found",{cause:404}))
         }
-        return res.status(200).json({message:"Done",properties})
+        return res.status(200).json({status:true, message:"Done",properties})
 
 }
 
