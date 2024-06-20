@@ -69,7 +69,7 @@ const property=await propertyModel.create(
     location,
     essentials,
     addedBy:user._id,
-    addedByType
+    addedByType,
     propertyImages,
     customId
     // SurroundingFacilities,
@@ -94,12 +94,12 @@ const {
   bedrooms,
   bathrooms,
   isFurnished,
-  // SurroundingFacility,
   price,per,
   numberOfGuests,
   address,
   location,
   details,
+  addedByType
 }=req.body
   const property=await propertyModel.findById(propertyid)
   if(!property){
@@ -107,24 +107,18 @@ const {
   }
 
 
-  // if(SurroundingFacility){
-  // if(!property.SurroundingFacilities.includes(SurroundingFacility))
-  //   property.SurroundingFacilities.push(SurroundingFacility)
-  // }
-
   if(!property.addedBy.equals(user._id)){
     return next(new Error("You are not authorized",{cause:200}))}
-
-
   if(description){property.description=description}
-  if(type){property.type=type}
+  if(type){property.type=type.toLowerCase()}
   if(numberOfGuests){property.numberOfGuests =numberOfGuests}
   if(bedrooms){property.bedrooms =bedrooms}
   if(bathrooms){property.bathrooms =bathrooms}
   if(address){property.address =address}
   if(location){property.location =location}
   if(price){property.price =price}
-  if(per){property.per =per}
+  if(per){property.per =per.toLowerCase()}
+  if(addedByType){property.addedByType=addedByType.toLowerCase()}
   if(isFurnished){property.isFurnished =isFurnished}
   if(roomsNumber){property.roomsNumber =roomsNumber}
   if(level){property.level =level}
@@ -137,10 +131,9 @@ const {
   //   property.essentials.naturalGas=essentials.naturalGas|| property.essentials.naturalGas
   //   property.essentials.wifi=essentials.wifi|| property.essentials.wifi
   //   property.essentials.kitchen=essentials.kitchen|| property.essentials.kitchen
-
   //   property.essentials=essentials
   // }
-
+//TODo details
 
 
 /////////////////////////////////////////////
@@ -156,18 +149,14 @@ const {
   //////////////////////////////////////////
 
 //   if(details){
-//     // console.log(details);
 //     const detailsarr =details.split(',')
-//     // console.log(detailsarr);
    
 //     for(const ele of detailsarr){
 //       property.essentials[ele]=true
 //     }
-//     // console.log(essentials);
 //     }
 //     const str=''
 // for (const key in property.essentials) {
-//   console.log(key);
 //   if(key==true)
 //   str+=`${key}`
 // }
