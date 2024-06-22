@@ -13,4 +13,8 @@ router.post('/uploadProfilePic',
     multerCloudFunction(allowedExtensions.Image).single('ProfilePicture'),
     asyncHandler(userController.uploadProfilePic))
 
+
+// get user info
+// update user information 
+
 export default router

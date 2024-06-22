@@ -7,7 +7,8 @@ const router= Router()
 router.get("/",(req,res,next)=>{
     res.send('Hello Identity')
 })
-router.post('/verifyphone',isAuth(),asyncHandler(identityController.sendVerificationNumber))
-    
+router.post('/sendcode',isAuth(),asyncHandler(identityController.sendVerificationNumber))
+router.put('/verifyphone',isAuth(),asyncHandler(identityController.verifyNumber))
+
 
 export default router

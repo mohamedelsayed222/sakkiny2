@@ -12,7 +12,7 @@ const apiFeaturesInstance=new ApiFeatures( propertyModel.find()
 .select()
 // .pagination()
     const properties=await apiFeaturesInstance.mongooseQuery
-    return res.status(200).json({status:true, message:"Done",properties})
+    return res.status(200).json({status:true,message:"Done",properties})
 }
 
 export const getSpecificProperty=async(req,res,next)=>{

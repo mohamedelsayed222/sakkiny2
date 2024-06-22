@@ -55,6 +55,10 @@ const userSchema=new Schema(
             type:Boolean,
             default:false
         },
+        identityId:{
+            type:Schema.Types.ObjectId,
+            ref:'Identity',
+        },
         likedProperties:[{
             type:Schema.Types.ObjectId,
             ref:'Property',
