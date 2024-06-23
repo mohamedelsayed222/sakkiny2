@@ -10,6 +10,8 @@ const {
     description,area,level,roomsNumber,
     bedrooms,bathrooms,isFurnished,
     price,numberOfGuests,address,
+    latitude,
+    longitude,
     // location,
     details
     // SurroundingFacilities,
@@ -68,6 +70,8 @@ const property=await propertyModel.create(
     numberOfGuests,
     address,
     // location,
+    latitude,
+    longitude,
     essentials,
     addedBy:user._id,
     addedByType,
@@ -99,8 +103,10 @@ const {
   isFurnished,
   price,per,
   numberOfGuests,
+  latitude,
+  longitude,
   address,
-  location,
+  // location,
   details,
   addedByType
 }=req.body
