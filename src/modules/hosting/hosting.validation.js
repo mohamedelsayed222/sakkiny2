@@ -28,7 +28,7 @@ body:
             addedByType:joi.string(),
             numberOfGuests:joi.string(),
             address:joi.string().required(),
-            location:locationSchema.required(),
+            // location:locationSchema.required(),
             // essentials:essentialsSchema.required()
             details:joi.string(),
 }).required().options({allowUnknown:false})

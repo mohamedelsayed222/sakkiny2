@@ -10,7 +10,8 @@ const {
     description,area,level,roomsNumber,
     bedrooms,bathrooms,isFurnished,
     price,numberOfGuests,address,
-    location,details
+    // location,
+    details
     // SurroundingFacilities,
     }=req.body
     const user=req.user
@@ -66,7 +67,7 @@ const property=await propertyModel.create(
     price,per,
     numberOfGuests,
     address,
-    location,
+    // location,
     essentials,
     addedBy:user._id,
     addedByType,
