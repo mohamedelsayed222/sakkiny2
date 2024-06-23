@@ -12,6 +12,8 @@ export const addService=async(req,res,next)=>{
         price,
         // country,
         // city,
+        latitude,
+        longitude,
         address,
         location
     }=req.body
@@ -54,7 +56,9 @@ export const addService=async(req,res,next)=>{
         customId,
         // country,
         // city,
-        location,
+        // location,
+        latitude,
+        longitude,
         address,
         userId:user._id
     })

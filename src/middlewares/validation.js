@@ -38,7 +38,7 @@ export const validationCoreFunction = (schema) => {
         const validationResult = schema[key].validate(req[key], {
           abortEarly: false,
         }) // error
-        console.log(validationResult.error)
+        // console.log(validationResult.error)
         if (validationResult.error) {
           // validationErrorArr = [...validationResult.error.details]
           validationErrorArr.push(validationResult.error.details)

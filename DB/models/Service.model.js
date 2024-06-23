@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import { LocationSchema } from "./location.schema.js";
 
 
 const serviceSchema=new Schema({
@@ -29,7 +28,9 @@ const serviceSchema=new Schema({
     }],
     
     // address:{type:String, required:true},
-    location:LocationSchema,
+    // location:LocationSchema,
+    latitude:{type:Number ,required:true},
+longitude:{type:Number, required:true},
     address:{type:String,required:true},
     // country:String,
     // city:String,

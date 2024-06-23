@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import { LocationSchema } from "./location.schema.js";
 
 const propertySchema =new Schema({
     description:{type:String,required:true},

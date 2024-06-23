@@ -1,10 +1,6 @@
 import joi from "joi"
 
 
-const locationSchema=joi.object({
-    longitude:joi.number(),
-    latitude:joi.number()})
-
 export const addService={
     body:
             joi.object({
@@ -14,7 +10,8 @@ export const addService={
                 // city:joi.string().required(),
                 address:joi.string().required(),
                 serviceCategory:joi.string().required(),
-                location:locationSchema
+                longitude:joi.number(),
+                latitude:joi.number(),
     }).required()
     }
 
@@ -26,6 +23,7 @@ export const addService={
                     price:joi.number().positive(),
                     address:joi.string(),
                     serviceCategory:joi.string(),
-                    location:locationSchema
-        }).required()
+                    longitude:joi.number(),
+                    latitude:joi.number()
+                        }).required()
         }
