@@ -25,7 +25,7 @@ body:
             isFurnished:joi.boolean(),
             price:joi.number().positive().required(),
             per:joi.string(),
-            addedByType:joi.string().required(),
+            addedByType:joi.string(),
             numberOfGuests:joi.string(),
             address:joi.string().required(),
             location:locationSchema.required(),
