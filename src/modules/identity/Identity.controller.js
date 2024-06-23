@@ -68,7 +68,7 @@ export const verifyNumber=async(req,res,next)=>{
     return next(new Error("Code is incorrect please"))
 }
 
-
+//TODO
 export const uploadCameraImage=async(req,res,next)=>{
     const user=req.user
     if(!req.file){

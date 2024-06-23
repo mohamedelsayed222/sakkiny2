@@ -8,5 +8,6 @@ router.get('/',asyncHandler(propertyController.getAllProperties))
 router.get('/search',asyncHandler(propertyController.searchProperty))
 router.get('/recommend',isAuth(),asyncHandler(propertyController.recommendProperty))
 router.get('/:propertyId',isAuth(),asyncHandler(propertyController.getSpecificProperty))
-
+router.post('/:propertyId/like',isAuth(),asyncHandler(propertyController.likeproperty))
+router.get('/:llikes',isAuth(),asyncHandler(propertyController.getlikedProperties))
 export default router

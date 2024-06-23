@@ -4,7 +4,6 @@ import propertyModel from '../../../DB/models/Property.model.js'
 
 
 export const getAllProperties=async(req,res,next)=>{
-const {select}=req.query
 const apiFeaturesInstance=new ApiFeatures( propertyModel.find()
     .populate({path:'addedBy',
         select:'email name phoneNumber gender status profilePicture -_id'})
@@ -44,6 +43,41 @@ export const searchProperty=async(req,res,next)=>{
 
 }
 
+
+export const likeproperty=async(req,res,next)=>{
+    const user=req.user 
+    const {propertyId}=req.params
+    if(!propertyId){
+        return next(new Error("Error 404"))
+    }
+    const property =await propertyModel.findById(propertyId)
+    if (!property){
+        return next(new Error("Property not found"))
+    }
+    property.likesCount+=1
+    user.likedProperties.push(propertyId)
+    await property.save()
+    await user.save()
+    return res.json({status:true,message:"Added to Likes"})
+}
+
+export const getlikedProperties=async(req,res,next)=>{
+    const user=req.user
+    const likedPropertiesIds = user.likedProperties.map(post => post._id);
+    const apiFeaturesInstance=new ApiFeatures( propertyModel.find(
+        { _id: { $in: likedPropertiesIds } }
+    )
+    .populate({path:'addedBy',
+        select:'email name phoneNumber gender status profilePicture -_id'})
+,req.query)
+.select()
+// .pagination()
+    const properties=await apiFeaturesInstance.mongooseQuery
+    if(!properties.length){
+        return next (new Error("There is no liked properties")) 
+    }
+    return res.status(200).json({status:true,message:"Done",properties})
+}
 
 
 // export const recommendProperty=async(req,res,next)=>{
