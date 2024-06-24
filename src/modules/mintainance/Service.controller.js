@@ -10,12 +10,9 @@ export const addService=async(req,res,next)=>{
     const {
         description,
         price,
-        // country,
-        // city,
         latitude,
         longitude,
         address,
-        location
     }=req.body
     if(!user.isVerified){
         return next (new Error("Please verify your identity",{cause:200}))
@@ -54,9 +51,6 @@ export const addService=async(req,res,next)=>{
         serviceCategory,
         images,
         customId,
-        // country,
-        // city,
-        // location,
         latitude,
         longitude,
         address,
@@ -105,7 +99,10 @@ export const updateService=async(req,res,next)=>{
     if(description){service.description=description}
     if(serviceCategory){service.serviceCategory=serviceCategory.toLowerCase()}
     if(address){service.address =address}
-    if(location){service.location =location}
+    if(longitude||latitude){
+        service.longitude =longitude;
+        service.latitude =latitude;
+      }
     if(price){service.price =price}
     if (req.files.length){
         const serviceImages=[...service.images]
@@ -121,9 +118,32 @@ export const updateService=async(req,res,next)=>{
     }
     service.images=serviceImages
     }
+    if (!service.images?.length){
+        return next (new Error("Please upload pictures showing your service",{cause:200}))
+    }
     await service.save()
     return res.status(200).json({status:true,message:"Updated",service})
 }
+
+export const deleteImage=async (req,res,next)=>{
+    const {serviceId}=req.params
+    const {public_id}=req.body
+    const service=await serviceModel.findById(serviceId)
+    if(!service){
+        return next(new Error("Service not exist",{cause:200}))
+    }
+    if(!service.userId.equals(req.user._id)){
+        return next(new Error("You are not authorized",{cause:200}))
+    }
+    const image=service.images.find(i=>i.public_id==public_id)
+    if(!image){
+        return next(new Error("Wrong Image",{cause:200}))
+    }
+    service.images.splice(service.images.indexOf(image),1)
+    await cloudinary.uploader.destroy(public_id)
+    await service.save()
+    return res.status(201).json({status:true, message:"Deleted"})
+    }
 
 export const searchService=async(req,res,next)=>{
     const apiFeaturesInst=new ApiFeatures( serviceModel.find({})
@@ -176,22 +196,4 @@ export const getSpecificService=async(req,res,next)=>{
         return res.status(200).json({status:true,message:"Done",service})
 }
 
-export const deleteImage=async (req,res,next)=>{
-    const {serviceId}=req.params
-    const {public_id}=req.body
-    const service=await serviceModel.findById(serviceId)
-    if(!service){
-        return next(new Error("Service not exist",{cause:200}))
-    }
-    if(!service.userId.equals(req.user._id)){
-        return next(new Error("You are not authorized",{cause:200}))
-    }
-    const image=service.images.find(i=>i.public_id==public_id)
-    if(!image){
-        return next(new Error("Wrong Image",{cause:200}))
-    }
-    service.images.splice(service.images.indexOf(image),1)
-    await cloudinary.uploader.destroy(public_id)
-    await service.save()
-    return res.status(201).json({status:true, message:"Deleted"})
-    }
+
