@@ -54,18 +54,26 @@ export const likeproperty=async(req,res,next)=>{
     if (!property){
         return next(new Error("Property not found"))
     }
+    const propertyExist=user.likedProperties.find(ele=>ele.equals(propertyId))
+    if(propertyExist){
+        property.likesCount-=1
+        user.likedProperties = user.likedProperties.filter(prop => !prop.equals(propertyId));
+        await property.save()
+        await user.save()
+        return res.json({status:true,message:"Removed"})
+    }
     property.likesCount+=1
     user.likedProperties.push(propertyId)
     await property.save()
     await user.save()
-    return res.json({status:true,message:"Added to Likes"})
+    return res.json({status:true,message:"Added to Favorite"})
 }
 
 export const getlikedProperties=async(req,res,next)=>{
     const user=req.user
-    const likedPropertiesIds = user.likedProperties.map(post => post._id);
-    const apiFeaturesInstance=new ApiFeatures( propertyModel.find(
-        { _id: { $in: likedPropertiesIds } }
+    // const likedPropertiesIds = user.likedProperties.map(post => post._id);
+    const apiFeaturesInstance=new ApiFeatures( propertyModel.findOne(
+        { _id: { $in:  "user.likedProperties" } }
     )
     .populate({path:'addedBy',
         select:'email name phoneNumber gender status profilePicture -_id'})

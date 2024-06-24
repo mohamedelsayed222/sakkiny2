@@ -41,13 +41,21 @@ export const validationCoreFunction = (schema) => {
         // console.log(validationResult.error)
         if (validationResult.error) {
           // validationErrorArr = [...validationResult.error.details]
-          validationErrorArr.push(validationResult.error.details)
+          // console.log(validationResult.error.details[0]);
+          // console.log(validationResult.error.details[1]);
+          for(let i of validationResult.error.details ){
+            validationErrorArr.push(i.message)
+          }
+
+          // validationErrorArr.push(validationResult.error.details)
         }
       }
     }
 
     if (validationErrorArr.length) {
-      req.validationErrors = validationErrorArr
+      const v=validationErrorArr.toString()
+      console.log(v);
+      req.validationErrors = v
       return next(new Error('Validation Error', { cause: 200 }))
     }
     next()
