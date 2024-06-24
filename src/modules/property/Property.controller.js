@@ -66,14 +66,15 @@ export const likeproperty=async(req,res,next)=>{
     user.likedProperties.push(propertyId)
     await property.save()
     await user.save()
+    console.log(user.likedProperties);
     return res.json({status:true,message:"Added to Favorite"})
 }
 
 export const getlikedProperties=async(req,res,next)=>{
     const user=req.user
-    // const likedPropertiesIds = user.likedProperties.map(post => post._id);
-    const apiFeaturesInstance=new ApiFeatures( propertyModel.findOne(
-        { _id: { $in:  "user.likedProperties" } }
+    const likedPropertiesIds = user.likedProperties.map(post => post._id);
+    const apiFeaturesInstance=new ApiFeatures( propertyModel.find(
+        { _id: { $in:  likedPropertiesIds } }
     )
     .populate({path:'addedBy',
         select:'email name phoneNumber gender status profilePicture -_id'})

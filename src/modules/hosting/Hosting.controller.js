@@ -124,7 +124,13 @@ const {
   if(bedrooms){property.bedrooms =bedrooms}
   if(bathrooms){property.bathrooms =bathrooms}
   if(address){property.address =address}
-  if(location){property.location =location}
+  // if(location){property.location =location}
+  if(longitude||latitude){
+    property.longitude =longitude;
+    property.latitude =latitude;
+  }
+
+
   if(price){property.price =price}
   if(per){property.per =per.toLowerCase()}
   if(addedByType){property.addedByType=addedByType.toLowerCase()}
@@ -184,6 +190,10 @@ const {
   propertyImages.push({ public_id, secure_url })
 }
 property.propertyImages=propertyImages
+
+if(property.propertyImages.length<5){
+  return next(new Error("The Images should be at least 5",{cause:200}))
+}
 }
 await property.save()
 return res.status(200).json({message:"Updated",property})
