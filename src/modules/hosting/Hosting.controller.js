@@ -138,45 +138,17 @@ const {
   if(roomsNumber){property.roomsNumber =roomsNumber}
   if(level){property.level =level}
   if(area){property.size =size}
-  // if(essentials){
-  //   property.essentials.balcony=essentials.balcony||property.essentials.balcony
-  //   property.essentials.elevator=essentials.elevator||property.essentials.elevator
-  //   property.essentials.landLine=essentials.landLine||property.essentials.landLine
-  //   property.essentials.privateGarden=essentials.privateGarden||property.essentials.privateGarden
-  //   property.essentials.naturalGas=essentials.naturalGas|| property.essentials.naturalGas
-  //   property.essentials.wifi=essentials.wifi|| property.essentials.wifi
-  //   property.essentials.kitchen=essentials.kitchen|| property.essentials.kitchen
-  //   property.essentials=essentials
-  // }
-//TODo details
-
-
-/////////////////////////////////////////////
-//TO DO 
-  // const arr=[]
-  // for ( key in essentials) {
-  //   console.log(essentials[key]==true);
-  //   if(essentials[key]===true)
-  //   arr.push(key)
-  // }
-  // const str=arr.join(',')
-  // console.log(str);
-  //////////////////////////////////////////
-
-//   if(details){
-//     const detailsarr =details.split(',')
-   
-//     for(const ele of detailsarr){
-//       property.essentials[ele]=true
-//     }
-//     }
-//     const str=''
-// for (const key in property.essentials) {
-//   if(key==true)
-//   str+=`${key}`
-// }
-
-
+  if(details){
+    for (let key in property.essentials){
+      if (property.essentials[key] === 'boolean') {
+        property.essentials[key] = false;
+    } 
+    }
+    const detailsarr =details.split(',')
+    for(const ele of detailsarr){
+      property.essentials[ele]=true
+    }
+    }
   if (req.files.length){
     const propertyImages=[...property.propertyImages]
     const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${user.customId}/Property/${property.customId}`
@@ -191,9 +163,10 @@ const {
 }
 property.propertyImages=propertyImages
 
+
+}
 if(property.propertyImages.length<5){
   return next(new Error("The Images should be at least 5",{cause:200}))
-}
 }
 await property.save()
 return res.status(200).json({message:"Updated",property})
