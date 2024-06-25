@@ -62,7 +62,11 @@ const userSchema=new Schema(
         likedProperties:[{
             type:Schema.Types.ObjectId,
             ref:'Property',
-        }]
+        }],
+        likedServices:[{
+            type:Schema.Types.ObjectId,
+            ref:'Service',
+        }],
     },{
         timestamps:true
     }

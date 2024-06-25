@@ -197,3 +197,48 @@ export const getSpecificService=async(req,res,next)=>{
 }
 
 
+
+
+export const likeService=async(req,res,next)=>{
+    const user=req.user 
+    const {serviceId}=req.params
+    if(!serviceId){
+        return next(new Error("Error 404"))
+    }
+    const service =await serviceModel.findById(serviceId)
+    if (!service){
+        return next(new Error("Service not found"))
+    }
+    const serviceExist=user.likedServices.find(ele=>ele.equals(serviceId))
+    if(serviceExist){
+        service.likesCount-=1
+        user.likedServices = user.likedServices.filter(prop => !prop.equals(serviceId));
+        await service.save()
+        await user.save()
+        return res.json({status:true,message:"Removed"})
+    }
+    service.likesCount+=1
+    user.likedServices.push(serviceId)
+    await service.save()
+    await user.save()
+    return res.json({status:true,message:"Added to Favorite"})
+}
+
+export const getlikedServices=async(req,res,next)=>{
+    const user=req.user
+    const likedServicesIds = user.likedServices.map(post => post._id);
+    const apiFeaturesInstance=new ApiFeatures( serviceModel.find(
+        { _id: { $in:  likedServicesIds } }
+    )
+    .populate({path:'userId',
+        select:'email name phoneNumber gender status profilePicture -_id'})
+,req.query)
+.select()
+// .pagination()
+    const services=await apiFeaturesInstance.mongooseQuery
+    if(!services.length){
+        return next (new Error("There is no liked properties")) 
+    }
+    return res.status(200).json({status:true,message:"Done",services})
+}
+

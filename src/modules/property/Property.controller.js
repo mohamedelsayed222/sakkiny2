@@ -66,7 +66,6 @@ export const likeproperty=async(req,res,next)=>{
     user.likedProperties.push(propertyId)
     await property.save()
     await user.save()
-    console.log(user.likedProperties);
     return res.json({status:true,message:"Added to Favorite"})
 }
 

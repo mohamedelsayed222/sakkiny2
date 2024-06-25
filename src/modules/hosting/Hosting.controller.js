@@ -90,6 +90,7 @@ res.status(201).json({status:true, message: 'Done',property })
 
 
 
+
 export const updateProperty=async (req,res,next)=>{
 const user=req.user
 const {propertyid}=req.params
@@ -172,6 +173,8 @@ await property.save()
 return res.status(200).json({message:"Updated",property})
 }
 
+
+
 export const deletePropertyImage=async (req,res,next)=>{
   const {propertyid}=req.params
   const {public_id}=req.body
@@ -182,11 +185,6 @@ export const deletePropertyImage=async (req,res,next)=>{
   if(!property.addedBy.equals(req.user._id)){
     return next(new Error("You are not authorized",{cause:200}))
   }
-  // if(!property.propertyImages.includes({secure_url,public_id,_id})){
-    
-  //   return next(new Error("Wrong Image",{cause:400}))
-  // }
-
   const image=property.propertyImages.find(i=>i.public_id==public_id)
   if(!image){
       return next(new Error("Wrong Image",{cause:200}))
@@ -197,6 +195,7 @@ export const deletePropertyImage=async (req,res,next)=>{
   await property.save()
 return res.status(200).json({message:"Deleted"})
 }
+
 
 
 

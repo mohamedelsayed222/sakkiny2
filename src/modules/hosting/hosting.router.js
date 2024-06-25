@@ -20,7 +20,7 @@ router.put('/update/:propertyid',
     validationCoreFunction(validators.updateProperty),
     asyncHandler(hostingController.updateProperty)
 )
-router.delete('/update/:propertyid/deleteimage',
+router.delete('/update/:propertyid/deleteImage',
     isAuth(),
     asyncHandler(hostingController.deletePropertyImage)
 )

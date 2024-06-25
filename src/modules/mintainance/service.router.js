@@ -24,19 +24,20 @@ validationCoreFunction(validators.updateService),
 asyncHandler(serviceController.updateService)
 )
 
+router.delete("/update/:serviceId/deleteImage",
+    isAuth(),
+    asyncHandler(serviceController.deleteImage)
+)
 router.delete("/delete/:serviceId",
     isAuth(),
     asyncHandler(serviceController.deleteService)
 )
 
-router.delete("/update/:serviceId/deleteImage",
-    isAuth(),
-    asyncHandler(serviceController.deleteImage)
-)
 
 router.get('/search',asyncHandler(serviceController.searchService))
 
-
+router.get('/likes',isAuth(),asyncHandler(serviceController.getlikedServices))
+router.put('/:serviceId/like',isAuth(),asyncHandler(serviceController.likeService))
 router.get('/:serviceId',asyncHandler(serviceController.getSpecificService))
 
 export default router
