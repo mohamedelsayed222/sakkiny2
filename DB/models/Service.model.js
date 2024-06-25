@@ -35,6 +35,8 @@ longitude:{type:Number, required:true},
     // country:String,
     // city:String,
     customId:String,
+    likesCount:{type:Number,default:0},
+
 },{
     timestamps:true,
 })

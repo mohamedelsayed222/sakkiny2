@@ -19,9 +19,10 @@ const {
     const user=req.user
 ///////////////////validation/////////////////////////
 
-if(!user.isVerified){
+if(!ide){
     return next (new Error("Please verify your identity",{cause:200}))
 }
+
 if (!req.files?.length||req.files.length<5){
     return next (new Error("Please upload  at least 5 pictures of your property",{cause:200}))
 }

@@ -7,6 +7,7 @@ const propertySchema =new Schema({
         enum:['apartment','duplex','room','studio','shop','villa'],
         required:true
     }, 
+    userverified:{type:Boolean,default:false},
     roomsNumber:{type:Number},
     bedrooms:{type:Number,required:true},
     bathrooms:{type:Number,required:true},
@@ -74,6 +75,7 @@ longitude:{type:Number, required:true},
     address:{type:String,required:true},
     customId:String,
     likesCount:{type:Number,default:0}
+
 
 },{
     timestamps:true
