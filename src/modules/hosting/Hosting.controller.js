@@ -19,7 +19,7 @@ const {
     const user=req.user
 ///////////////////validation/////////////////////////
 
-if(!ide){
+if(!user.isVerified){
     return next (new Error("Please verify your identity",{cause:200}))
 }
 
