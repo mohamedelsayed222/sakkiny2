@@ -59,7 +59,7 @@ export const verifyIdentity=async(req,res,next)=>{
     }
     // if(identity.phoneNumberVerification.verified){
     //     return next (new Error('Your phone number is already verified')) 
-    // }
+    // 
 
     if(!code){
         return next(new Error("Please Enter the code"))
@@ -68,7 +68,7 @@ export const verifyIdentity=async(req,res,next)=>{
         return next(new Error("Code is incorrect please"))
     }
     identity.phoneNumberVerification.verified=true
-
+/////////////////////////////////////////////////////////////////////
 if(!Object.keys(req.files).length){
     return next(new Error("Please upload the required images"))
 }
@@ -103,30 +103,6 @@ identity.identityImages=identityImages
     await identity.save()
     return res.json({status:true,message:"Your request will be reviewed Thanks!"})
 }
-
-//TODO
-export const uploadCameraImage=async(req,res,next)=>{
-    const user=req.user
-    if(!req.file){
-        return next (new Error("upload a picture",{cause:400}))
-    }
-    const customId=nanoid()
-   
-    const data =await cloudinary.uploader.upload(req.file.path,
-        {
-            folder: `${process.env.PROJECT_FOLDER}/user/${user.customId || customId}/profilePicture`,
-        }
-    )
-    const {secure_url,public_id}=data
-    user.profilePicture={secure_url,public_id}
-    if(!user.customId){
-    user.customId=customId
-        }
-    await user.save()
-    return res.status(201).json({message:"Done",user})
-
-}
-
 
 
 

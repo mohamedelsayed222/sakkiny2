@@ -86,8 +86,8 @@ if (!property) {
 
 if(!user.isVerified){
   property.userVerified=false
-  property.save()
-  res.status(201).json({status:true, message: 'Please verify your identity first',property })
+  await property.save()
+  res.status(201).json({status:true, message: 'Please verify your identity to show your property',property })
 }
 res.status(201).json({status:true, message: 'Uploaded',property })
 }
