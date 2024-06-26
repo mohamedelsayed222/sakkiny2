@@ -19,9 +19,6 @@ const {
     const user=req.user
 ///////////////////validation/////////////////////////
 
-if(!user.isVerified){
-    return next (new Error("Please verify your identity",{cause:200}))
-}
 
 if (!req.files?.length||req.files.length<5){
     return next (new Error("Please upload  at least 5 pictures of your property",{cause:200}))
@@ -80,12 +77,19 @@ const property=await propertyModel.create(
     customId
     // SurroundingFacilities,
 })
+
 if (!property) {
   await cloudinary.api.delete_resources(publicIds)
   await cloudinary.api.delete_folder(propertyFolder)
   return next(new Error('try again later', { cause: 404 }))
 }
-res.status(201).json({status:true, message: 'Done',property })
+
+if(!user.isVerified){
+  property.userVerified=false
+  property.save()
+  res.status(201).json({status:true, message: 'Please verify your identity first',property })
+}
+res.status(201).json({status:true, message: 'Uploaded',property })
 }
 
 

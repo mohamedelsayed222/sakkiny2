@@ -15,13 +15,14 @@ const identitySchema =new Schema({
         phoneNumber:{type:String},
         verified:{type:Boolean,default:false},
     },
-    cameraRollImage:{
+    verificationCode:{type:String},
+    identityImages:[{
         secure_url:{type:String},
         public_id:{type:String},
-    },
-    verificationCode:{type:String},
+    }],
     // phoneNumberVerified:{type:Boolean,default:false},
     identityVerification:{type:Boolean,default:false},
+
     verificationStatus:{type:String,default:'not verified',enum:['under review','verified','not verified','rejected']}
 
 })

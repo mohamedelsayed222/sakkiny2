@@ -7,7 +7,7 @@ const propertySchema =new Schema({
         enum:['apartment','duplex','room','studio','shop','villa'],
         required:true
     }, 
-    userverified:{type:Boolean,default:false},
+    userVerified:{type:Boolean,default:true},
     roomsNumber:{type:Number},
     bedrooms:{type:Number,required:true},
     bathrooms:{type:Number,required:true},

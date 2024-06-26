@@ -4,7 +4,7 @@ import propertyModel from '../../../DB/models/Property.model.js'
 
 
 export const getAllProperties=async(req,res,next)=>{
-const apiFeaturesInstance=new ApiFeatures( propertyModel.find()
+const apiFeaturesInstance=new ApiFeatures( propertyModel.find({userVerified:true})
     .populate({path:'addedBy',
         select:'email name phoneNumber gender status profilePicture -_id'})
 ,req.query)
@@ -27,7 +27,7 @@ export const getSpecificProperty=async(req,res,next)=>{
 }
 
 export const searchProperty=async(req,res,next)=>{
-    const apiFeaturesInst=new ApiFeatures( propertyModel.find({}).populate({path:'addedBy',
+    const apiFeaturesInst=new ApiFeatures( propertyModel.find({userVerified:true}).populate({path:'addedBy',
         select:'email name phoneNumber gender status profilePicture -_id'})
         ,req.query)
     .select()

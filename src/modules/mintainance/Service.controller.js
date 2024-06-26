@@ -237,7 +237,7 @@ export const getlikedServices=async(req,res,next)=>{
 // .pagination()
     const services=await apiFeaturesInstance.mongooseQuery
     if(!services.length){
-        return next (new Error("There is no liked properties")) 
+        return next (new Error("There is no liked services")) 
     }
     return res.status(200).json({status:true,message:"Done",services})
 }
