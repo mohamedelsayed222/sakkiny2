@@ -6,7 +6,7 @@ const vonage = new Vonage({
   apiSecret: process.env.Api_Secret_Vonage
 })
 const sendSMS=async({from="Vonage APIs",to,text})=>{
-   return await vonage.sms.send({to:`2${to}`, from, text})
+   return await vonage.sms.send({to:`+2${to}`, from, text})
         .then(resp => { console.log('Message sent successfully');
           console.log(resp);
           return true
