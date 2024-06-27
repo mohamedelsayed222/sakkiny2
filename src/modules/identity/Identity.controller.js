@@ -6,21 +6,16 @@ import cloudinary from '../../utils/cloudinaryconfig.js'
 
 export const sendVerificationNumber=async(req,res,next)=>{
     const user=req.user
-    // const {changeNumber}=req.body
-    // if(req.body.phoneNumber){
-    //     user.phoneNumber=req.body.phoneNumber
-    //     await user.save();
-    // } 
-   
+
     const phoneNumber=user.phoneNumber
     if(!phoneNumber){
         return next(new Error("Unexpected Error"))
     }
+    if(user.isVerified){
+        return next(new Error("you are already verified"))
+    }
     const code =nanoid()
-    // console.log(identity.us);
-  
 
-    
     const identity= await identityModel.findOne({userId:user._id})
     if(identity){
     // req.body.phoneNumber||req.body.phoneNumber!=user.phoneNumber)&&
@@ -31,15 +26,16 @@ export const sendVerificationNumber=async(req,res,next)=>{
         return next (new Error('Check your SMS')) 
         //TODO Dont recieve sms api  update verification code 
 }
+
 identity.phoneNumberVerification.phoneNumber=user.phoneNumber
 identity.verificationCode=code
 await identity.save()
 }
-if(!identity){
-    await identityModel.create({verificationCode:code,userId:user._id,verificationCode:code,'phoneNumberVerification.phoneNumber':phoneNumber})
-}
-    const sent=await sendSMS({to:phoneNumber,text:`
-    Welcome from Sakkiny your verification code is ${code}
+// if(!identity){
+await identityModel.create({verificationCode:code,userId:user._id,verificationCode:code,'phoneNumberVerification.phoneNumber':phoneNumber})
+// }
+    const sent=await sendSMS({to:phoneNumber,text:`Welcome from Sakkiny your verification code is 
+        ${code}
     Thank you  
     `})
     if(!sent){
@@ -47,6 +43,8 @@ if(!identity){
     }
     return res.json({status:true,message:"Message Sent "})
 }
+
+
 
 export const verifyIdentity=async(req,res,next)=>{
     const user=req.user
@@ -133,5 +131,50 @@ identity.identityImages=identityImages
 //     return res.json({status:true,message:"Your number is verified"})
 //     }
 //     return next(new Error("Code is incorrect please"))
+// }
+
+
+
+// export const sendVerificationNumber=async(req,res,next)=>{
+//     const user=req.user
+//     // const {changeNumber}=req.body
+//     // if(req.body.phoneNumber){
+//     //     user.phoneNumber=req.body.phoneNumber
+//     //     await user.save();
+//     // } 
+//     const phoneNumber=user.phoneNumber
+//     if(!phoneNumber){
+//         return next(new Error("Unexpected Error"))
+//     }
+//     const code =nanoid()
+//     // console.log(identity.us);
+  
+
+    
+//     const identity= await identityModel.findOne({userId:user._id})
+//     if(identity){
+//     // req.body.phoneNumber||req.body.phoneNumber!=user.phoneNumber)&&
+//     if(identity?.phoneNumberVerification.verified){
+//             return next (new Error('Your phone number is already verified')) 
+//     }
+//     if(identity?.verificationCode){
+//         return next (new Error('Check your SMS')) 
+//         //TODO Dont recieve sms api  update verification code 
+// }
+// identity.phoneNumberVerification.phoneNumber=user.phoneNumber
+// identity.verificationCode=code
+// await identity.save()
+// }
+// if(!identity){
+//     await identityModel.create({verificationCode:code,userId:user._id,verificationCode:code,'phoneNumberVerification.phoneNumber':phoneNumber})
+// }
+//     const sent=await sendSMS({to:phoneNumber,text:`
+//     Welcome from Sakkiny your verification code is ${code}
+//     Thank you  
+//     `})
+//     if(!sent){
+//         return next (new Error('Try again later')) 
+//     }
+//     return res.json({status:true,message:"Message Sent "})
 // }
 

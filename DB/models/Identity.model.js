@@ -7,10 +7,10 @@ const identitySchema =new Schema({
             unique:true,
             required:true,
     },
-    nationalIdImages:[{   
-    secure_url:{type:String},
-    public_id:{type:String},
-    }],
+    // nationalIdImages:[{   
+    // secure_url:{type:String},
+    // public_id:{type:String},
+    // }],
     phoneNumberVerification:{
         phoneNumber:{type:String},
         verified:{type:Boolean,default:false},
@@ -21,7 +21,7 @@ const identitySchema =new Schema({
         public_id:{type:String},
     }],
     // phoneNumberVerified:{type:Boolean,default:false},
-    identityVerification:{type:Boolean,default:false},
+    // identityVerification:{type:Boolean,default:false},
 
     verificationStatus:{type:String,default:'not verified',enum:['under review','verified','not verified','rejected']}
 
