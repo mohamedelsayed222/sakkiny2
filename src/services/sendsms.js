@@ -2,7 +2,7 @@ import { Vonage } from '@vonage/server-sdk'
 import dotenv from 'dotenv'
 dotenv.config()
 const vonage = new Vonage({
-  apiKey: "ca09dc68",
+  apiKey: "dde25ac0",
   apiSecret: process.env.Api_Secret_Vonage
 })
 const sendSMS=async({from="Vonage APIs",to,text})=>{
