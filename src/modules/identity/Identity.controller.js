@@ -31,6 +31,7 @@ identity.phoneNumberVerification.phoneNumber=user.phoneNumber
 identity.verificationCode=code
 await identity.save()
 }
+//test
 // if(!identity){
 await identityModel.create({verificationCode:code,userId:user._id,verificationCode:code,'phoneNumberVerification.phoneNumber':phoneNumber})
 // }
