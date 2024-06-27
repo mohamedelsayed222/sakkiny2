@@ -81,7 +81,7 @@ export const confirmEmail=asyncHandler(
   async(req,res,next)=>{
     const {token}=req.params
     const decoded=verifyToken({token,signature:process.env.EMAIL_SIGNATURE})
-    console.log(decoded);
+    // console.log(decoded);
     const user =await userModel.findOneAndUpdate(
         {email:decoded.email},
         {confirmEmail:true},
