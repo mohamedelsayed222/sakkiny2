@@ -11,6 +11,7 @@ export const sendVerificationNumber=async(req,res,next)=>{
     //     user.phoneNumber=req.body.phoneNumber
     //     await user.save();
     // } 
+   
     const phoneNumber=user.phoneNumber
     if(!phoneNumber){
         return next(new Error("Unexpected Error"))
@@ -21,9 +22,7 @@ export const sendVerificationNumber=async(req,res,next)=>{
 
     
     const identity= await identityModel.findOne({userId:user._id})
-    if(!identity){
-        await identityModel.create({verificationCode:code,userId:user._id,verificationCode:code,'phoneNumberVerification.phoneNumber':phoneNumber})
-    }
+    if(identity){
     // req.body.phoneNumber||req.body.phoneNumber!=user.phoneNumber)&&
     if(identity?.phoneNumberVerification.verified){
             return next (new Error('Your phone number is already verified')) 
@@ -32,8 +31,13 @@ export const sendVerificationNumber=async(req,res,next)=>{
         return next (new Error('Check your SMS')) 
         //TODO Dont recieve sms api  update verification code 
 }
+identity.phoneNumberVerification.phoneNumber=user.phoneNumber
 identity.verificationCode=code
 await identity.save()
+}
+if(!identity){
+    await identityModel.create({verificationCode:code,userId:user._id,verificationCode:code,'phoneNumberVerification.phoneNumber':phoneNumber})
+}
     const sent=await sendSMS({to:phoneNumber,text:`
     Welcome from Sakkiny your verification code is ${code}
     Thank you  
