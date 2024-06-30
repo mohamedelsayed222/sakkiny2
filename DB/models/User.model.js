@@ -11,6 +11,7 @@ const userSchema=new Schema(
             type:String,
             required:true,
         },
+   
         password:{
             type:String,
             required:true,
@@ -35,8 +36,8 @@ const userSchema=new Schema(
         },
         // address:[AddressSchema],
         profilePicture:{
-            secure_url:String,
-            public_id:String
+            secure_url:{type:String,default:null},
+            public_id:{type:String,default:null}
         },
         age:Number,
         customPath:String,

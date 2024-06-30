@@ -72,7 +72,7 @@ export const verifyIdentity=async(req,res,next)=>{
     }
     identity.phoneNumberVerification.verified=true
 /////////////////////////////////////////////////////////////////////
-if(!Object.keys(req.files).length){
+if(!Object.keys(req.files).length==3){
     return next(new Error("Please upload the required images"))
 }
 if(!user.customId){

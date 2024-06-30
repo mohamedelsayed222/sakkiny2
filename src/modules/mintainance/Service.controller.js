@@ -14,9 +14,6 @@ export const addService=async(req,res,next)=>{
         longitude,
         address,
     }=req.body
-    if(!user.isVerified){
-        return next (new Error("Please verify your identity",{cause:200}))
-    }
 
     if (!req.files?.length){
         return next (new Error("Please upload pictures showing your service",{cause:200}))
@@ -63,7 +60,16 @@ export const addService=async(req,res,next)=>{
         return next(new Error('trye again later', { cause: 400 }))
     }
 
-    res.status(201).json({ status:true, message: 'Done', service })
+
+
+    
+if(!user.isVerified){
+    service.userVerified=false
+    await service.save()
+    res.status(201).json({status:true, message: 'Please verify your identity to show your service',property })
+  }
+
+    res.status(201).json({ status:true, message: 'Done, Your service has been uploaded successfully', service })
 
 
 
@@ -224,7 +230,7 @@ export const likeService=async(req,res,next)=>{
     return res.json({status:true,message:"Added to Favorite"})
 }
 
-export const getlikedServices=async(req,res,next)=>{
+export const getLikedServices=async(req,res,next)=>{
     const user=req.user
     const likedServicesIds = user.likedServices.map(post => post._id);
     const apiFeaturesInstance=new ApiFeatures( serviceModel.find(

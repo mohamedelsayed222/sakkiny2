@@ -7,7 +7,6 @@ const propertySchema =new Schema({
         enum:['apartment','duplex','room','studio','shop','villa'],
         required:true
     }, 
-    userVerified:{type:Boolean,default:true},
     roomsNumber:{type:Number},
     bedrooms:{type:Number,required:true},
     bathrooms:{type:Number,required:true},
@@ -16,6 +15,7 @@ const propertySchema =new Schema({
         ref:'User',
         required:true
     },
+    userVerified:{type:Boolean,default:true},
     addedByType:{
         type:String,
         default:'owner',
@@ -28,7 +28,6 @@ const propertySchema =new Schema({
     area:{type:Number,required:true},
     level:{type:String,required:true},
     isFurnished:{type:Boolean,required:true},
-
     essentials:{
         balcony:{type:Boolean,default:false},
         wifi:{type:Boolean,default:false},
@@ -63,13 +62,8 @@ const propertySchema =new Schema({
         enum:['Available','Booked']
     },
     address:{type:String, required:true},
-//     location:{
-    
-//         // address:{type:String},
-//         // addressName:{type:String},
-// },
-latitude:{type:Number ,required:true},
-longitude:{type:Number, required:true},
+    latitude:{type:Number ,required:true},
+    longitude:{type:Number, required:true},
     // {type:LocationSchema,required:true},
 
     address:{type:String,required:true},

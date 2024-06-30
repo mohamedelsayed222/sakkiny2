@@ -7,6 +7,7 @@ const serviceSchema=new Schema({
         ref:'User',
         required:true,
     },
+    userVerified:{type:Boolean,default:true},
     serviceCategory:{
         type:String,
         required:true,
