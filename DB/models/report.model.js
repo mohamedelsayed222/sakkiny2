@@ -1,25 +1,40 @@
 import { Schema, model } from "mongoose";
 const reportSchema =new Schema({
     message:{type:String,require:true},
-    reportedUserName:{
-    type:String,
-    required:true,
-    },
-    createdBy:{
-        type:Schema.Types.ObjectId,
-        ref:'User',
-        required:true,
+    subject:{type:String,},
+    // createdBy:{
+    //     type:Schema.Types.ObjectId,
+    //     ref:'User',
+    // },
+    name:{
+        type:String,
+        required:true
     },
     reportImage:{
-            secure_url:{type:String,required:true},
-            public_id:{type:String,required:true},
+            secure_url:{type:String},
+            public_id:{type:String},
         },
-    reportStatus:{
+    email:{
         type:String,
-        enum:["checking","sent",'']
+        required:true
     },
+
+    contactNumber:{
+        type:String,
+        required:true
+    },
+    // reportStatus:{
+    //     type:String,
+    //     enum:["checking","sent",'']
+    // },
     response:{
+        type:String
+    },
+    customId:{
         type:String
     }
     
-})
+},{timestamps:true})
+
+const reportModel = model('Report',reportSchema)
+export default reportModel

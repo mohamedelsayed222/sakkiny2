@@ -11,6 +11,11 @@ router.post('/uploadProfilePic',
     isAuth(),
     multerCloudFunction(allowedExtensions.Image).single('ProfilePicture'),
     asyncHandler(userController.uploadProfilePic))
+router.post('/feedback',
+    multerCloudFunction(allowedExtensions.Image).single('Image'),
+    asyncHandler(userController.feedback)
+
+)
 router.get('/profile',isAuth(),userController.getUser)
 router.get('/myProperties',isAuth(),asyncHandler(userController.getProperties))
 router.get('/myService',isAuth(),asyncHandler(userController.getService))

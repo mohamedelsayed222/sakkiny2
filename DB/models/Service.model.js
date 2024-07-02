@@ -31,7 +31,7 @@ const serviceSchema=new Schema({
     // address:{type:String, required:true},
     // location:LocationSchema,
     latitude:{type:Number ,required:true},
-longitude:{type:Number, required:true},
+    longitude:{type:Number, required:true},
     address:{type:String,required:true},
     // country:String,
     // city:String,

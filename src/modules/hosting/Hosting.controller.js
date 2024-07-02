@@ -120,8 +120,6 @@ const {
   if(!property){
     return next(new Error("Property not exist",{cause:200}))
   }
-
-
   if(!property.addedBy.equals(user._id)){
     return next(new Error("You are not authorized",{cause:200}))}
   if(description){property.description=description}
@@ -135,8 +133,6 @@ const {
     property.longitude =longitude;
     property.latitude =latitude;
   }
-
-
   if(price){property.price =price}
   if(per){property.per =per.toLowerCase()}
   if(addedByType){property.addedByType=addedByType.toLowerCase()}
@@ -226,12 +222,6 @@ const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${req.user.customId}/Pr
   return res.status(201).json({status:true,message:"Deleted"})
 }
 
-
-
-
 // export const hideProperty=async(req,res,next)=>{
 
-
 // }
-
-
