@@ -20,11 +20,7 @@ const identitySchema =new Schema({
         secure_url:{type:String},
         public_id:{type:String},
     }],
-    // phoneNumberVerified:{type:Boolean,default:false},
-    // identityVerification:{type:Boolean,default:false},
-
-    verificationStatus:{type:String,default:'not verified',enum:['under review','verified','not verified','rejected']}
-
+    identityVerified:{type:Boolean,default:false},
 })
 const identityModel=model('Identity',identitySchema)
 export default identityModel

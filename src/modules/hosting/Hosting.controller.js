@@ -4,6 +4,8 @@ import propertyModel from '../../../DB/models/Property.model.js'
 import cloudinary from '../../utils/cloudinaryconfig.js'
 import { customAlphabet } from 'nanoid'
 const nanoid = customAlphabet('123456_=!ascbhdtel', 5)
+
+
 export const addProperty=async(req,res,next)=>{
 
 const {
@@ -18,8 +20,6 @@ const {
     }=req.body
     const user=req.user
 ///////////////////validation/////////////////////////
-
-
 if (!req.files?.length||req.files.length<5){
     return next (new Error("Please upload  at least 5 pictures of your property",{cause:200}))
 }
@@ -93,9 +93,6 @@ res.status(201).json({status:true, message: 'Uploaded',property })
 }
 
 
-
-
-
 export const updateProperty=async (req,res,next)=>{
 const user=req.user
 const {propertyid}=req.params
@@ -139,10 +136,10 @@ const {
   if(isFurnished){property.isFurnished =isFurnished}
   if(roomsNumber){property.roomsNumber =roomsNumber}
   if(level){property.level =level}
-  if(area){property.size =size}
+  if(area){property.area =area}
   if(details){
     for (let key in property.essentials){
-      if (property.essentials[key] === 'boolean') {
+      if (property.essentials[key] == true) {
         property.essentials[key] = false;
     } 
     }

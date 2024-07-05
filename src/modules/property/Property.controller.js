@@ -4,7 +4,7 @@ import propertyModel from '../../../DB/models/Property.model.js'
 
 
 export const getAllProperties=async(req,res,next)=>{
-const apiFeaturesInstance=new ApiFeatures( propertyModel.find({userVerified:true})
+const apiFeaturesInstance=new ApiFeatures( propertyModel.find({userVerified:true,bannedUser:false})
     .populate({path:'addedBy',
         select:'email name phoneNumber gender status profilePicture -_id'})
 ,req.query)

@@ -16,12 +16,12 @@ const userSchema=new Schema(
             type:String,
             required:true,
         },
-        role:{
-            type:String,
-            default:systemRoles.User,
-            enum:[systemRoles.User,
-                systemRoles.Admin],
-        },
+        // role:{
+        //     type:String,
+        //     default:systemRoles.User,
+        //     enum:[systemRoles.User,
+        //         systemRoles.Admin],
+        // },
         phoneNumber:{
             type:String,
             required:true
@@ -68,6 +68,7 @@ const userSchema=new Schema(
             type:Schema.Types.ObjectId,
             ref:'Service',
         }],
+        bannedUser:{type:Boolean,default:false}
     },{
         timestamps:true
     }

@@ -37,7 +37,7 @@ const serviceSchema=new Schema({
     // city:String,
     customId:String,
     likesCount:{type:Number,default:0},
-
+    bannedUser:{type:Boolean,default:false},
 },{
     timestamps:true,
 })

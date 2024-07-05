@@ -68,9 +68,8 @@ const propertySchema =new Schema({
 
     address:{type:String,required:true},
     customId:String,
-    likesCount:{type:Number,default:0}
-
-
+    likesCount:{type:Number,default:0},
+    bannedUser:{type:Boolean,default:false},
 },{
     timestamps:true
 })

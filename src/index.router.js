@@ -4,6 +4,7 @@ import authRouter from './modules/auth/auth.router.js'
 import propertyRouter from './modules/property/proprty.router.js'
 import identityRouter from './modules/identity/identity.router.js'
 import hostingRouter from './modules/hosting/hosting.router.js'
+import adminRouter from './modules/Admin Dashboard/admin.router.js'
 import serviceRouter from './modules/mintainance/service.router.js'
 import { globalErrorHandling } from "./utils/errorHandling.js";
 import bodyParser from 'body-parser';
@@ -24,6 +25,8 @@ const bootstrap=(app,express)=>{
     app.use('/identity',identityRouter) 
     app.use('/hosting',hostingRouter)
     app.use('/service',serviceRouter)
+    app.use('/admin',adminRouter)
+
 
     app.use(globalErrorHandling)
 }

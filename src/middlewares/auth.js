@@ -1,5 +1,4 @@
 import userModel from '../../DB/models/User.model.js'
-import { systemRoles } from '../utils/systemRoles.js'
 import { generateToken, verifyToken } from '../utils/tokenFunctions.js'
 
 export const isAuth = (roles) => { 

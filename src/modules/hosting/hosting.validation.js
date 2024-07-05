@@ -41,7 +41,7 @@ export const updateProperty={
                 level:joi.string(),
                 roomsNumber:joi.number().positive(),
                 bathrooms:joi.number().positive(),
-                badrooms:joi.number().positive(),
+                bedrooms:joi.number().positive(),
                 isFurnished:joi.boolean(),
                 price:joi.number().positive(),
                 per:joi.string(),
