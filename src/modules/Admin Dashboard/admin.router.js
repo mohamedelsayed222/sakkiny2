@@ -10,40 +10,45 @@ import { asyncHandler } from '../../utils/errorHandling.js';
 const router=Router()
 
 //signup 
-router.post("/register",  //1
+router.post("/register",  
     // isAuthAdmin(),
     // validationCoreFunction(signup),
    asyncHandler(adminController.signup))
 
 //confirmEmail
-router.get("/confirmEmail/:token",asyncHandler(adminController.confirmEmail)) //2
+router.get("/confirmEmail/:token",asyncHandler(adminController.confirmEmail)) 
 
 //login
-router.post("/login",   //3
+router.post("/login",   
     // validationCoreFunction(login),
     asyncHandler(adminController.login))
-    //get counts
-router.get('/properties',isAuthAdmin(),asyncHandler(adminController.getProperties)) //5
-router.get('/services',isAuthAdmin(),asyncHandler(adminController.getServices))  //6
-    
+router.get("/counts",isAuthAdmin,
+        asyncHandler(adminController.getCounts)
+    )
+router.get('/properties',isAuthAdmin(),asyncHandler(adminController.getProperties))
+router.get('/services',isAuthAdmin(),asyncHandler(adminController.getServices))  
+router.get("/identities",  
+    isAuthAdmin(),
+    asyncHandler(adminController.getAllIdentities))
+router.get("/identities/unverified",  
+        isAuthAdmin(),
+        asyncHandler(adminController.getUnverifiedIdentities))
+router.get("/users",  
+    isAuthAdmin(),
+    asyncHandler(adminController.getUsers))
 
-//check identity
-// router.get("/identity",  //4
-//     isAuthAdmin(),
-//     adminController.getIdentities)
-
-//verify or reject identity 
-
-
-//get users //get properties //get services 
-
-//Delete 
-
+router.put("/checkIdentity/:identityId",isAuthAdmin(),
+asyncHandler(adminController.checkIdentity)
+)
+router.get("/reports",  
+    isAuthAdmin(),
+    asyncHandler(adminController.getAllreports))
 
 //check reports 
+router.put("/reports/:reportId",isAuthAdmin(),
+asyncHandler(adminController.respondToReport)
+)
 
-
-//send notification 
 
 
 

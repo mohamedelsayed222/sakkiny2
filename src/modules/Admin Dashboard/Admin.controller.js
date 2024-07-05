@@ -7,6 +7,7 @@ import bcrypt from 'bcryptjs'
 import  sendEmail  from '../../services/sendEmailService.js';
 import { generateToken, verifyToken } from '../../utils/tokenFunctions.js';
 import { ApiFeatures } from "../../utils/apiFeatures.js"
+import userModel from "../../../DB/models/User.model.js"
 
 
 export const signup=async(req,res,next)=>{
@@ -105,7 +106,9 @@ export const login=async(req,res,next)=>{
     }
 
 export const getProperties=async(req,res,next)=>{
-            const apiFeaturesInstance=new ApiFeatures( propertyModel.find()
+            const apiFeaturesInstance=new ApiFeatures( propertyModel.find() 
+            .populate({path:'addedBy',
+                select:'email name phoneNumber gender status profilePicture -_id'})
             ,req.query)
             .select()
             // .pagination()
@@ -119,9 +122,11 @@ export const getProperties=async(req,res,next)=>{
 export const getServices=async(req,res,next)=>{
             const user=req.user
             const apiFeaturesInstance=new ApiFeatures( serviceModel.find()
+            .populate({path:'userId',
+                select:'email name phoneNumber gender status profilePicture -_id'})
             ,req.query)
             .select()
-            .pagination()
+            // .pagination()
                 const services=await apiFeaturesInstance.mongooseQuery
                 if(!services.length){
                     return next (new Error('No Service'))
@@ -131,9 +136,11 @@ export const getServices=async(req,res,next)=>{
 
 export const getAllIdentities=async(req,res,next)=>{
     const apiFeaturesInstance=new ApiFeatures( identityModel.find()
+    .populate({path:'userId',
+        select:'email name phoneNumber gender status profilePicture -_id'})
     ,req.query)
     .select()
-    .pagination()
+    // .pagination()
         const identities=await apiFeaturesInstance.mongooseQuery
         if(!identities.length){
             return next (new Error('There are no identities to show'))
@@ -141,9 +148,11 @@ export const getAllIdentities=async(req,res,next)=>{
         return res.status(200).json({status:true,message:"Done",identities})
     }
 
-
+//////////////////////////////////////
 export const getUnverifiedIdentities=async(req,res,next)=>{
     const apiFeaturesInstance=new ApiFeatures( identityModel.find({identityVerified:false})
+    .populate({path:'userId',
+        select:'email name phoneNumber gender status profilePicture -_id'})
     ,req.query)
     .select()
     .pagination()
@@ -154,10 +163,23 @@ export const getUnverifiedIdentities=async(req,res,next)=>{
         return res.status(200).json({status:true,message:"Done",identities})
 }
 
+
+export const getUsers=async(req,res,next)=>{
+    const apiFeaturesInstance=new ApiFeatures( userModel.find()
+    ,req.query)
+    .select()
+    // .pagination()
+        const users=await apiFeaturesInstance.mongooseQuery
+        if(!users.length){
+            return next (new Error('There are no users to show'))
+        }
+        return res.status(200).json({status:true,message:"Done",users})
+    }
+
+
 export const checkIdentity=async(req,res,next)=>{
-    const identityId=req.query
-    
-    const identity=await identityModel.findById(identityId)
+    const {identityId}=req.params
+    const identity=await identityModel.findById({_id:identityId})
     if(!identity){
         return next(new Error("No such identity"))
     }
@@ -168,14 +190,23 @@ export const checkIdentity=async(req,res,next)=>{
         return next(new Error("identity already verified"))
     }
     const user=await userModel.findById(identity.userId)
+    if(!user){
+        return next(new Error("user undefiened"))
+    }
     if(user.isVerified){
         return next(new Error("user already verified"))
+    }
+    if(!req.body.status){
+        return next(new Error("Status is required"))
     }
     if(req.body.status=="verified"){
         identity.identityVerified=true
         user.isVerified=true
-        await serviceModel.findOneAndUpdate({userId:'user._id'},{userVerified:true})
-        await propertyModel.updateMany({addedBy:'user._id'},{userVerified:true})
+        await user.save()
+        await identity.save()
+        await serviceModel.findOneAndUpdate({userId:user._id},{userVerified:true})
+        await propertyModel.updateMany({addedBy:user._id},{userVerified:true})
+
         const html=`<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -191,7 +222,7 @@ export const checkIdentity=async(req,res,next)=>{
         </body>
         </html>`
         await sendEmail({to:user.email,subject:"verification",html})
-        return res.json({message:"Done you accept the identity"})
+        return res.json({message:"Done you verify the identity"})
     }
     if(req.body.status=="rejected"){
         const html=`<!DOCTYPE html>
@@ -227,30 +258,58 @@ export const getAllreports=async(req,res,next)=>{
         return res.status(200).json({status:true,message:"Done",reports})
 }
 
-
-// export const deleteProperty=async (req,res,next)=>{
-//         const {propertyid}=req.params
-//         const property=await propertyModel.findById(propertyid)
-//         if(!property){
-//           return next(new Error("Property not exist",{cause:200}))
-//         }
-//       const publicIds=[]
-//       const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${req.user.customId}/Property/${property.customId}`
-//         for (const image of property.propertyImages) {
-//         publicIds.push(image.public_id)
-//         }
-//         // await cloudinary.api.delete_all_resources(propertyFolder)
-//         await propertyModel.deleteOne({_id:propertyid})
-//         await cloudinary.api.delete_resources(publicIds)
-//         await cloudinary.api.delete_folder(propertyFolder)
-//         return res.status(201).json({status:true,message:"Deleted"})
-//     }
-
 export const respondToReport=async(req,res,next)=>{
-
+const {reportId}=req.params
+if(!reportId){
+    return next (new Error("A report is required"))
 }
+const report =await reportModel.findById(reportId)
+if(!report){
+    return next (new Error("Report doesnt exist"))
+}
+const {response}=req.body
+if(!response){
+    return next (new Error("You should respond to the report"))
+}
+report.response=response
+await report.save()
+const html=`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sakinny</title>
+</head>
+<body>
+  <div style="text-align: center; margin-top: 20px;">
+    <h1>Welcome to Sakinny!</h1>
+    <h6>${response}</h6>
+  </div>
+</body>
+</html>`
+await sendEmail({to:report.email,subject:"Report Admin Response",html})
+
+return res.json({status:true,message:"Done"})
+}
+
+export const getCounts=async(req,res,next) => {
+console.log("<MMM");
+      const userCount = await userModel.countDocuments({});
+      const propertyCount = await propertyModel.countDocuments({});
+      const serviceCount = await serviceModel.countDocuments({});
+      
+      res.json({ users: userCount, properties: propertyCount, services: serviceCount })
+  }
+
+
+
+
 export const banUser=async(req,res,next)=>{
+
+
 }
 
 export const getBannedUser=async(req,res,next)=>{
+
+
 }

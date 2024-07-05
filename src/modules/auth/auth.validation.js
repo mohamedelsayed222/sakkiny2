@@ -31,7 +31,7 @@ body:
         .lowercase()
         .required(),
         password:joi.string()
-                .pattern(new RegExp(/^(?=.*\d)(?=.*[A-Za-z])\w{6,}$/))
+                // .pattern(new RegExp(/^(?=.*\d)(?=.*[A-Za-z])\w{6,}$/))
                 .required(),
 }).required().options({allowUnknown:false})
 }
