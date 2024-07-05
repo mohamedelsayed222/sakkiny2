@@ -293,13 +293,13 @@ return res.json({status:true,message:"Done"})
 }
 
 export const getCounts=async(req,res,next) => {
-console.log("<MMM");
       const userCount = await userModel.countDocuments({});
       const propertyCount = await propertyModel.countDocuments({});
       const serviceCount = await serviceModel.countDocuments({});
       
       res.json({ users: userCount, properties: propertyCount, services: serviceCount })
-  }
+}
+
 
 
 

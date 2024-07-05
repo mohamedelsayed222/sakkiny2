@@ -22,7 +22,7 @@ router.get("/confirmEmail/:token",asyncHandler(adminController.confirmEmail))
 router.post("/login",   
     // validationCoreFunction(login),
     asyncHandler(adminController.login))
-router.get("/counts",isAuthAdmin,
+router.get("/counts",isAuthAdmin(),
         asyncHandler(adminController.getCounts)
     )
 router.get('/properties',isAuthAdmin(),asyncHandler(adminController.getProperties))
