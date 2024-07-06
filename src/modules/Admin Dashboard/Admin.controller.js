@@ -74,6 +74,7 @@ export const confirmEmail=async(req,res,next)=>{
 
 export const login=async(req,res,next)=>{
         const {email,password}=req.body
+        console.log({email,password});
         const admin=await adminModel.findOne({email})
         if(!admin){
         return next(new Error("Invalid Email email does not exist ",{cause:200}))

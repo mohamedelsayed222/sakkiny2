@@ -8,14 +8,14 @@ import adminRouter from './modules/Admin Dashboard/admin.router.js'
 import serviceRouter from './modules/mintainance/service.router.js'
 import { globalErrorHandling } from "./utils/errorHandling.js";
 import bodyParser from 'body-parser';
-// import cors from 'cors'
+import cors from 'cors'
 
 
 const bootstrap=(app,express)=>{
     app.use(express.json())
     app.use(bodyParser.urlencoded({ extended: true })); 
     connectDB();
-    // app.use(cors())
+    app.use(cors())
     app.get('/',(req,res)=>{
         res.send("Welcome to Sakkiny")
     })

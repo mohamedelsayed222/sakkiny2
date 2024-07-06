@@ -37,7 +37,7 @@ router.get("/users",
     isAuthAdmin(),
     asyncHandler(adminController.getUsers))
 
-router.put("/checkIdentity/:identityId",isAuthAdmin(),
+router.post("/checkIdentity/:identityId",isAuthAdmin(),
 asyncHandler(adminController.checkIdentity)
 )
 router.get("/reports",  
