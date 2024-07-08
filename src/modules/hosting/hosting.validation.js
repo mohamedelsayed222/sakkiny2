@@ -39,6 +39,7 @@ export const updateProperty={
                 type:joi.string(),
                 area:joi.number().positive(),
                 level:joi.string(),
+                propertyStatus:joi.string(),
                 roomsNumber:joi.number().positive(),
                 bathrooms:joi.number().positive(),
                 bedrooms:joi.number().positive(),
