@@ -112,6 +112,7 @@ const {
   details,
   addedByType
 }=req.body
+console.log(propertyId);
   const property=await propertyModel.findById(propertyId)
   if(!property){
     return next(new Error("Property not exist",{cause:200}))
