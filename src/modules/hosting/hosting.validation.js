@@ -45,8 +45,8 @@ export const updateProperty={
                 // essentials:essentialsSchema
     }).required(),
     // .options({allowUnknown:false})
-    query:joi.object({
-        // propertyId:generalFields._id,
+    params:joi.object({
+        propertyId:generalFields._id,
         propertyId:joi.string()
     })
     }
