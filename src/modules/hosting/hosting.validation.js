@@ -1,4 +1,5 @@
 import joi from 'joi'
+import { generalFields } from '../../middlewares/validation.js'
 export const addProperty={
 body:
         joi.object({
@@ -42,6 +43,9 @@ export const updateProperty={
                 longitude:joi.number(),
                 latitude:joi.number()
                 // essentials:essentialsSchema
-    }).required()
+    }).required(),
     // .options({allowUnknown:false})
+    params:joi.object({
+        propertyId:generalFields._id.required(),
+    })
     }
