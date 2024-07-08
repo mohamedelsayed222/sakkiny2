@@ -46,7 +46,7 @@ export const updateProperty={
     }).required(),
     // .options({allowUnknown:false})
     query:joi.object({
-        propertyId:generalFields._id,
+        // propertyId:generalFields._id,
         propertyId:joi.string()
     })
     }
