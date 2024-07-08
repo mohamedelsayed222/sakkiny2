@@ -7,10 +7,7 @@ const identitySchema =new Schema({
             unique:true,
             required:true,
     },
-    // nationalIdImages:[{   
-    // secure_url:{type:String},
-    // public_id:{type:String},
-    // }],
+
     phoneNumberVerification:{
         phoneNumber:{type:String},
         verified:{type:Boolean,default:false},

@@ -94,53 +94,6 @@ export const confirmEmail=asyncHandler(
     )}
 )
 
-// export const resendConfirmEmail=asyncHandler(
-//     async(req,res,next)=>{
-//     const {token}=req.params
-//     const decoded=verifyToken({token,signature:process.env.EMAIL_SIGNATURE})
-//     const user=await userModel.findOne(decoded.email)
-//     if (!user||!user._id){
-//     res.send(`<a href="${req.protocol}://${req.headers.host}/auth/signup">
-//         ooops you look like you don't sign up follow me to sign up
-//     </a>`
-//         )
-//     }
-//     if (user.confirmEmail==true){
-//     res.send(`<a href="${req.protocol}://${req.headers.host}/auth/login">
-//     you look like you have already confirmed your Email go to login page
-//         </a>`
-//     )
-// }
-
-//     const newtoken=generateToken({
-//         payload:{id:user._id,email:user.email},
-//         signature:process.env.EMAIL_SIGNATURE,
-//         expiresIn:60*2
-//     })
-//     const link=`${req.protocol}://${req.headers.host}/auth/confirmEmail/${newtoken}`
-//     const html=`<!DOCTYPE html>
-//         <html lang="en">
-//         <head>
-//         <meta charset="UTF-8">
-//         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//         <title>Sakinny</title>
-//         </head>
-//         <body>
-//           <div style="text-align: center; margin-top: 20px;">
-//             <h1>Welcome to Sakinny!</h1>
-//             <p>Please confirm your email address.</p>
-//             <button style="background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">
-//             <a href="${link}" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff ; text-decoration: none; text-decoration: none; padding: 15px 25px; border-radius: 2px; display: inline-block;">Activate Account</a> 
-//             </button>
-//             <br>
-//           </div>
-//         </body>
-//         </html>`
-//     await sendEmail({to:user.email,subject:"confirmation",html})
-//     return res.send("Check your inbox")
-//   }
-// )
-
 export const login=asyncHandler(
     async(req,res,next)=>{
     const {email,password}=req.body
@@ -255,4 +208,49 @@ export const updatePassword=asyncHandler(
         return res.json({status:true,message:"Done your password updated"})
     })
 
+// export const resendConfirmEmail=asyncHandler(
+//     async(req,res,next)=>{
+//     const {token}=req.params
+//     const decoded=verifyToken({token,signature:process.env.EMAIL_SIGNATURE})
+//     const user=await userModel.findOne(decoded.email)
+//     if (!user||!user._id){
+//     res.send(`<a href="${req.protocol}://${req.headers.host}/auth/signup">
+//         ooops you look like you don't sign up follow me to sign up
+//     </a>`
+//         )
+//     }
+//     if (user.confirmEmail==true){
+//     res.send(`<a href="${req.protocol}://${req.headers.host}/auth/login">
+//     you look like you have already confirmed your Email go to login page
+//         </a>`
+//     )
+// }
 
+//     const newtoken=generateToken({
+//         payload:{id:user._id,email:user.email},
+//         signature:process.env.EMAIL_SIGNATURE,
+//         expiresIn:60*2
+//     })
+//     const link=`${req.protocol}://${req.headers.host}/auth/confirmEmail/${newtoken}`
+//     const html=`<!DOCTYPE html>
+//         <html lang="en">
+//         <head>
+//         <meta charset="UTF-8">
+//         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//         <title>Sakinny</title>
+//         </head>
+//         <body>
+//           <div style="text-align: center; margin-top: 20px;">
+//             <h1>Welcome to Sakinny!</h1>
+//             <p>Please confirm your email address.</p>
+//             <button style="background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">
+//             <a href="${link}" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff ; text-decoration: none; text-decoration: none; padding: 15px 25px; border-radius: 2px; display: inline-block;">Activate Account</a> 
+//             </button>
+//             <br>
+//           </div>
+//         </body>
+//         </html>`
+//     await sendEmail({to:user.email,subject:"confirmation",html})
+//     return res.send("Check your inbox")
+//   }
+// )

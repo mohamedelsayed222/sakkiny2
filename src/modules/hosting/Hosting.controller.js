@@ -92,7 +92,7 @@ res.status(201).json({status:true, message: 'Uploaded',property })
 
 export const updateProperty=async (req,res,next)=>{
 const user=req.user
-const {propertyid}=req.params
+const {propertyId}=req.params
 const {
   description,
   type,
@@ -112,7 +112,7 @@ const {
   details,
   addedByType
 }=req.body
-  const property=await propertyModel.findById({_id:propertyid})
+  const property=await propertyModel.findById({_id:propertyId})
   if(!property){
     return next(new Error("Property not exist",{cause:200}))
   }

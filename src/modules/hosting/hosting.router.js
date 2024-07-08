@@ -14,16 +14,16 @@ router.post('/add',
     validationCoreFunction(validators.addProperty),
     asyncHandler(hostingController.addProperty)
 )
-router.put('/update/:propertyid',
+router.put('/update/:propertyId',
     isAuth(),
     multerCloudFunction().array('propertyImages'),
     validationCoreFunction(validators.updateProperty),
     asyncHandler(hostingController.updateProperty)
 )
-router.delete('/update/:propertyid/deleteImage',
-    isAuth(),
-    asyncHandler(hostingController.deletePropertyImage)
-)
+// router.delete('/update/:propertyId/deleteImage',
+//     isAuth(),
+//     asyncHandler(hostingController.deletePropertyImage)
+// )
 router.delete('/delete/:propertyid',
     isAuth(),
     asyncHandler(hostingController.deleteProperty)
