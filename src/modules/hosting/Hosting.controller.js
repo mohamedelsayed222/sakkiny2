@@ -112,7 +112,7 @@ const {
   details,
   addedByType
 }=req.body
-  const property=await propertyModel.findById({_id:propertyId})
+  const property=await propertyModel.findById(propertyId)
   if(!property){
     return next(new Error("Property not exist",{cause:200}))
   }
@@ -195,8 +195,8 @@ return res.status(200).json({message:"Deleted"})
 }
 
 export const deleteProperty=async (req,res,next)=>{
-  const {propertyid}=req.params
-  const property=await propertyModel.findById(propertyid)
+  const {propertyId}=req.params
+  const property=await propertyModel.findById(propertyId)
   if(!property){
     return next(new Error("Property not exist",{cause:200}))
   }
@@ -210,7 +210,7 @@ const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${req.user.customId}/Pr
   publicIds.push(image.public_id)
   }
   // await cloudinary.api.delete_all_resources(propertyFolder)
-  await propertyModel.deleteOne({_id:propertyid})
+  await propertyModel.deleteOne({_id:propertyId})
   await cloudinary.api.delete_resources(publicIds)
   await cloudinary.api.delete_folder(propertyFolder)
   return res.status(201).json({status:true,message:"Deleted"})

@@ -20,7 +20,7 @@ async(req,res,next)=>{
     //check
     const checkEmail=await userModel.findOne({email})
     if(checkEmail){
-    return next(new Error("Email exist" ,{cause:200}))
+    return next(new Error("Email exist please go to login page" ,{cause:200}))
     }
 
     const hashpassword=bcrypt.hashSync

@@ -24,7 +24,7 @@ router.put('/update/:propertyId',
 //     isAuth(),
 //     asyncHandler(hostingController.deletePropertyImage)
 // )
-router.delete('/delete/:propertyid',
+router.delete('/delete/:propertyId',
     isAuth(),
     asyncHandler(hostingController.deleteProperty)
 )
