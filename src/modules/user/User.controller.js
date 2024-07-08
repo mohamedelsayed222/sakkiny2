@@ -8,7 +8,7 @@ import { customAlphabet } from 'nanoid'
 const nanoid = customAlphabet('123456_=!ascbhdtel', 5)
 export const hellouser=(req,res)=>{
     res.send("Hello User")
-}
+    }
 
 export const uploadProfilePic=async(req,res,next)=>{
     const user=req.user
@@ -34,7 +34,7 @@ export const uploadProfilePic=async(req,res,next)=>{
     await user.save()
     return res.status(201).json({message:"Done",user})
 
-}
+    }
 
 export const getUser=async(req,res,next)=>{
     const user=req.user
@@ -52,7 +52,7 @@ export const getProperties=async(req,res,next)=>{
                 return next (new Error('There are no uploaded properties'))
             }
             return res.status(200).json({status:true,message:"Done",properties})
-        }
+    }
     
 export const getService=async(req,res,next)=>{
         const user=req.user
@@ -65,7 +65,7 @@ export const getService=async(req,res,next)=>{
                 return next (new Error('No Service'))
             }
             return res.status(200).json({status:true,message:"Done",service})
-        }
+    }
 
 export const feedback=async(req,res,next)=>{
     // const authorization=req.headers
@@ -106,5 +106,5 @@ export const feedback=async(req,res,next)=>{
     }
     return res.status(201).json({status:true,message:"Your request was successfully submitted",feedback})
 
-}
+    }
 

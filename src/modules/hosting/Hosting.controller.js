@@ -1,10 +1,8 @@
 
-// import userModel from '../../../DB/models/User.model.js'
 import propertyModel from '../../../DB/models/Property.model.js'
 import cloudinary from '../../utils/cloudinaryconfig.js'
 import { customAlphabet } from 'nanoid'
 const nanoid = customAlphabet('123456_=!ascbhdtel', 5)
-
 
 export const addProperty=async(req,res,next)=>{
 
@@ -92,7 +90,6 @@ if(!user.isVerified){
 res.status(201).json({status:true, message: 'Uploaded',property })
 }
 
-
 export const updateProperty=async (req,res,next)=>{
 const user=req.user
 const {propertyid}=req.params
@@ -110,10 +107,12 @@ const {
   longitude,
   address,
   // location,
+  // public_ids,
+  propertyStatus,
   details,
   addedByType
 }=req.body
-  const property=await propertyModel.findById(propertyid)
+  const property=await propertyModel.findById({_id:propertyid})
   if(!property){
     return next(new Error("Property not exist",{cause:200}))
   }
@@ -129,6 +128,9 @@ const {
   if(longitude||latitude){
     property.longitude =longitude;
     property.latitude =latitude;
+  }
+  if(propertyStatus){
+    property.propertyStatus=propertyStatus 
   }
   if(price){property.price =price}
   if(per){property.per =per.toLowerCase()}
@@ -171,8 +173,6 @@ await property.save()
 return res.status(200).json({message:"Updated",property})
 }
 
-
-
 export const deletePropertyImage=async (req,res,next)=>{
   const {propertyid}=req.params
   const {public_id}=req.body
@@ -193,9 +193,6 @@ export const deletePropertyImage=async (req,res,next)=>{
   await property.save()
 return res.status(200).json({message:"Deleted"})
 }
-
-
-
 
 export const deleteProperty=async (req,res,next)=>{
   const {propertyid}=req.params
@@ -219,6 +216,6 @@ const propertyFolder=`${process.env.PROJECT_FOLDER}/user/${req.user.customId}/Pr
   return res.status(201).json({status:true,message:"Deleted"})
 }
 
-// export const hideProperty=async(req,res,next)=>{
+export const hideProperty=async(req,res,next)=>{
 
-// }
+}

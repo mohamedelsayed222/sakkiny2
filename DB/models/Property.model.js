@@ -41,10 +41,6 @@ const propertySchema =new Schema({
         electricityMeter:{type:Boolean,default:false},
         waterMeter:{type:Boolean,default:false}
         },
-//     SurroundingFacilities:[{
-//         type:String,
-//         lowercase:true,
-// }],
     price:{type:Number,required:true},
     per:{
         type:String,
@@ -59,8 +55,9 @@ const propertySchema =new Schema({
     propertyStatus:{
         type:String,
         default:'Available',
-        enum:['Available','Booked']
+        // enum:['Available','Not available']
     },
+
     address:{type:String, required:true},
     latitude:{type:Number ,required:true},
     longitude:{type:Number, required:true},

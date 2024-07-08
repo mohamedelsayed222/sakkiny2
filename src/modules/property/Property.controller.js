@@ -1,8 +1,6 @@
 import { ApiFeatures } from "../../utils/apiFeatures.js"
 import propertyModel from '../../../DB/models/Property.model.js'
 
-
-
 export const getAllProperties=async(req,res,next)=>{
 const apiFeaturesInstance=new ApiFeatures( propertyModel.find({userVerified:true})
     .populate({path:'addedBy',
@@ -42,7 +40,6 @@ export const searchProperty=async(req,res,next)=>{
         return res.status(200).json({status:true, message:"Done",properties})
 
 }
-
 
 export const likeproperty=async(req,res,next)=>{
     const user=req.user 
@@ -87,32 +84,31 @@ export const getlikedProperties=async(req,res,next)=>{
     return res.status(200).json({status:true,message:"Done",properties})
 }
 
+export const recommendProperty=async(req,res,next)=>{
+    const user=req.user
 
-// export const recommendProperty=async(req,res,next)=>{
-//     const user=req.user
+    let query
+    if(property.address.street=user.address.street){
 
-//     let query
-//     if(property.address.street=user.address.street){
-
-//     } 
-//     const properties=await propertyModel.find({
-//     $or:[
-//         {
-//             location: {
-//             $near: {
-//                 $geometry: { type: "Point", coordinates: [user.location.longtitude, user.location.latitude] },
-//                 $maxDistance: 1000,
-//             },
-//             },
-//           },
-//           {"property.address.street":user.address.street},
-//           {"property.address.village":user.address.village},
-//           {"property.address.city":user.address.city},
-//           {"property.address.country":user.address.country},
-//     ]
-//     })
-// return res.status(200).json({message:"Done",properties})
-// }
+    } 
+    const properties=await propertyModel.find({
+    $or:[
+        {
+            location: {
+            $near: {
+                $geometry: { type: "Point", coordinates: [user.location.longtitude, user.location.latitude] },
+                $maxDistance: 1000,
+            },
+            },
+          },
+          {"property.address.street":user.address.street},
+          {"property.address.village":user.address.village},
+          {"property.address.city":user.address.city},
+          {"property.address.country":user.address.country},
+    ]
+    })
+return res.status(200).json({message:"Done",properties})
+}
 
 
 

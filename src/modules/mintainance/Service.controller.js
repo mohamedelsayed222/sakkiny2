@@ -202,9 +202,6 @@ export const getSpecificService=async(req,res,next)=>{
         return res.status(200).json({status:true,message:"Done",service})
 }
 
-
-
-
 export const likeService=async(req,res,next)=>{
     const user=req.user 
     const {serviceId}=req.params

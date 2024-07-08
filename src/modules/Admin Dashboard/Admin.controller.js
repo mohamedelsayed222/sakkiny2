@@ -223,7 +223,7 @@ export const checkIdentity=async(req,res,next)=>{
         </body>
         </html>`
         await sendEmail({to:user.email,subject:"verification",html})
-        return res.json({message:"Done you verify the identity"})
+        return res.json({status:true,message:"Done you verify the identity"})
     }
     if(req.body.status=="rejected"){
         const html=`<!DOCTYPE html>
@@ -242,7 +242,7 @@ export const checkIdentity=async(req,res,next)=>{
         </body>
         </html>`
         await sendEmail({to:user.email,subject:"verification",html})
-        return res.json({message:"Done you reject the identity"})
+        return res.json({status:false,message:"Done you reject the identity"})
     }
 }
 
@@ -251,13 +251,27 @@ export const getAllreports=async(req,res,next)=>{
     const apiFeaturesInstance=new ApiFeatures( reportModel.find()
     ,req.query)
     .select()
-    .pagination()
+    // .pagination()
         const reports=await apiFeaturesInstance.mongooseQuery
         if(!reports.length){
             return next (new Error('There is no reports uploaded'))
         }
         return res.status(200).json({status:true,message:"Done",reports})
 }
+
+export const getReport=async(req,res,next)=>{
+    const {reportId}=req.params
+    const apiFeaturesInstance=new ApiFeatures( reportModel.findById(reportId)
+    ,req.query)
+    .select()
+    // .pagination()
+        const report=await apiFeaturesInstance.mongooseQuery
+        if(!report){
+            return next (new Error('There is no report'))
+        }
+        return res.status(200).json({status:true,message:"Done",report})
+}
+
 
 export const respondToReport=async(req,res,next)=>{
 const {reportId}=req.params

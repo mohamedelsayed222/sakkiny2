@@ -43,9 +43,12 @@ asyncHandler(adminController.checkIdentity)
 router.get("/reports",  
     isAuthAdmin(),
     asyncHandler(adminController.getAllreports))
-
+router.get("/reports/:reportId",  
+        isAuthAdmin(),
+        asyncHandler(adminController.getReport))
+    
 //check reports 
-router.put("/reports/:reportId",isAuthAdmin(),
+router.put("/respond/:reportId",isAuthAdmin(),
 asyncHandler(adminController.respondToReport)
 )
 
