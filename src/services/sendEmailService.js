@@ -1,10 +1,6 @@
-
 import nodemailer from 'nodemailer'
-
 const sendEmail=async({from=process.env.GMAIL,
       to,bcc,cc,subject,text,html,attachments=[]}={})=>{
-
-    
 const transporter = nodemailer.createTransport({
     service:"gmail",
       auth: {
@@ -12,7 +8,6 @@ const transporter = nodemailer.createTransport({
         pass: process.env.GMAIL_PASS,
       },
     });
-    
     const info = await transporter.sendMail({
         from, // sender address
         to, // list of receivers

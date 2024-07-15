@@ -41,12 +41,11 @@ export const updateProperty={
                 address:joi.string(),
                 details:joi.string(),
                 longitude:joi.number(),
-                latitude:joi.number()
+                latitude:joi.number(),
                 // essentials:essentialsSchema
     }).required(),
     // .options({allowUnknown:false})
     params:joi.object({
         propertyId:generalFields._id,
-        propertyId:joi.string()
     })
     }

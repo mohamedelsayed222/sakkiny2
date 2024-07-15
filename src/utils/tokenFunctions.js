@@ -14,7 +14,6 @@ export const generateToken=({
     )
     return token 
 }
-
 //=========verify token=======================
 export const verifyToken=({
     token='',

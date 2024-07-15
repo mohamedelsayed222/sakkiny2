@@ -175,9 +175,9 @@ return res.status(200).json({message:"Updated",property})
 }
 
 export const deletePropertyImage=async (req,res,next)=>{
-  const {propertyid}=req.params
+  const {propertyId}=req.params
   const {public_id}=req.body
-  const property=await propertyModel.findById(propertyid)
+  const property=await propertyModel.findById(propertyId)
   if(!property){
     return next(new Error("Property not exist",{cause:200}))
   }
