@@ -171,7 +171,7 @@ if(property.propertyImages.length<5){
   return next(new Error("The Images should be at least 5",{cause:200}))
 }
 await property.save()
-return res.status(200).json({message:"Updated",property})
+return res.status(200).json({status:true,message:"Updated",property})
 }
 
 export const deletePropertyImage=async (req,res,next)=>{
@@ -192,7 +192,7 @@ export const deletePropertyImage=async (req,res,next)=>{
   property.propertyImages.splice(property.propertyImages.indexOf(image),1)
   await cloudinary.uploader.destroy(public_id)
   await property.save()
-return res.status(200).json({message:"Deleted"})
+return res.status(200).json({status:true,message:"Deleted"})
 }
 
 export const deleteProperty=async (req,res,next)=>{

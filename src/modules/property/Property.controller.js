@@ -107,7 +107,7 @@ export const recommendProperty=async(req,res,next)=>{
           {"property.address.country":user.address.country},
     ]
     })
-return res.status(200).json({message:"Done",properties})
+return res.status(200).json({status:true,message:"Done",properties})
 }
 
 
